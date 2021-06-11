@@ -17,8 +17,6 @@ route.post('/', verify, async (req, res) => {
             postedBy: req.user._id
         });
 
-        //https://stackoverflow.com/questions/34985846/mongoose-document-references-with-a-one-to-many-relationship
-
         await Post.create(post);
 
         const user = await User.findById(req.user._id).exec();

@@ -18,8 +18,10 @@ app.use(express.json());
 //IMPORT ROUTES
 const authRoute = require('./routes/auth');
 const postsRoute = require('./routes/posts');
+const articlesRoute = require('./routes/articles');
 
 app.use('/api/user', authRoute);
 app.use('/api/posts', postsRoute);
+app.use('/api/articles', articlesRoute);
 
 app.listen(PORT, () => console.log(`Listening on port ${PORT}`));

@@ -1,4 +1,5 @@
 const express = require('express');
+const axios = require('axios');
 const route = express.Router();
 const Article = require('../model/Article');
 const User = require('../model/User');
@@ -43,9 +44,34 @@ route.post('/', verify, async (req, res) => {
 //GET ARTICLES FROM A SPECIFIC USER
 route.get('/', verify, async (req, res) => {
 
-  const articles = await Article.find({ savedBy: req.user._id }).exec();
+  try {
+    const articles = await Article.find({ savedBy: req.user._id }).exec();
 
-  res.send(articles);
+    res.send(articles);
+  } catch (error) {
+
+    res.status(401).json({ message: error })
+  }
+
+});
+
+//GET ARTICLES FROM TOP HEADLINES
+route.get('/top-headlines/q?', verify, async (req, res) => {
+
+  const { searchTerm } = req.query;
+
+  try {
+    const articlesResponse = await axios.get(`https://newsapi.org/v2/top-headlines?q=${searchTerm}&apiKey=${process.env.NEWS_API_KEY}`);
+
+    const articlesData = articlesResponse.data;
+
+
+    res.send(articlesData);
+
+  } catch (error) {
+    res.status(401).json({ message: error })
+  }
+
 });
 
 //DELETE POST

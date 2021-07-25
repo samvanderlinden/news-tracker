@@ -1,19 +1,24 @@
 const express = require('express');
 const route = express.Router();
 const Article = require('../model/Article');
+const User = require('../model/User');
 const verify = require('./verifyToken');
 const { JsonWebTokenError } = require('jsonwebtoken');
 
 //ADD ARTICLE TO COLLECTION IF USER IS LOGGED IN
 route.post('/', verify, async (req, res) => {
 
-  const { detail, title } = req.body;
+  const { source, author, description, content, title } = req.body;
 
   try {
-    const article = new Post({
-      detail,
+
+    const article = new Article({
+      source,
+      author,
+      content,
+      description,
       title,
-      postedBy: req.user._id
+      savedBy: req.user._id
     });
 
     await Article.create(article);

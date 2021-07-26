@@ -4,5 +4,5 @@
 - [x] Create server side articles route
 - [x] Create verify token routes
 - [x] Get news api key
-- [ ] Create server GET request for user to get news articles
+- [x] Create server GET request for user to get top-headline articles
 - [ ] Finish error handling in server side routes

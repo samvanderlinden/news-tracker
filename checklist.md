@@ -5,4 +5,5 @@
 - [x] Create verify token routes
 - [x] Get news api key
 - [x] Create server GET request for user to get top-headline articles
+- [x] Initialize Login, Logout, User components
 - [ ] Finish error handling in server side routes

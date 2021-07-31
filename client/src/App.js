@@ -1,55 +1,57 @@
-import { useState } from 'react';
-import Home from './components/Home/Home';
+import { useState, useContext } from 'react';
+import { Navbar, Nav, Container } from 'react-bootstrap';
+import { LinkContainer } from 'react-router-bootstrap';
 import Login from './components/Login/Login';
 import User from './components/User/User';
+import { AuthContext } from './store/authContext';
 import {
   BrowserRouter as Router,
   Switch,
   Route,
-  Link
+  Redirect
 } from "react-router-dom";
 
+
 export default function App() {
+  const authCtx = useContext(AuthContext);
+
   const [isLoggedIn, setIsLoggedIn] = useState(false);
 
   const logoutHandler = () => {
     setIsLoggedIn(false)
   }
 
-  // return (
-  //   <div>
-  //     <Header />
-  //     {isLoggedIn ? <User onLogout={logoutHandler} /> : <Login setIsLoggedIn={setIsLoggedIn} />}
-  //   </div>
-  // );
+  const loginHandler = () => {
+    setIsLoggedIn(true)
+  }
+
   return (
     <Router>
       <div>
-        <nav>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/login">Login</Link>
-            </li>
-            <li>
-              <Link to="/user">User</Link>
-            </li>
-          </ul>
-        </nav>
+        <Navbar bg="dark" variant="dark">
+          <Container>
+            <Nav className="me-auto">
+              <LinkContainer to="/">
+                <Nav.Link>Login</Nav.Link>
+              </LinkContainer>
+              <LinkContainer to="/user">
+                <Nav.Link>User</Nav.Link>
+              </LinkContainer>
+            </Nav>
+            <Navbar.Collapse className="justify-content-end">
+              <Navbar.Text>
+                {isLoggedIn ? <p>Welcome Sam</p> : <p>Please log in</p>}
+              </Navbar.Text>
+            </Navbar.Collapse>
+          </Container>
+        </Navbar>
 
-        {/* A <Switch> looks through its children <Route>s and
-            renders the first one that matches the current URL. */}
         <Switch>
-          <Route path="/login">
-            <Login />
-          </Route>
           <Route path="/user">
-            <User onLogout={logoutHandler} />
+            {!isLoggedIn ? <Redirect to="/" /> : <User onLogout={logoutHandler} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
           </Route>
           <Route path="/">
-            <Home />
+            {isLoggedIn ? <Redirect to="/user" /> : <Login setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} onLogIn={loginHandler} />}
           </Route>
         </Switch>
       </div>

@@ -1,8 +1,18 @@
+import Navbar from 'react-bootstrap/Navbar';
+
 const Header = () => {
   return (
-    <div>
-      <h1>Header</h1>
-    </div>
+    <Navbar>
+      <Container>
+        <Navbar.Brand href="#home">Navbar with text</Navbar.Brand>
+        <Navbar.Toggle />
+        <Navbar.Collapse className="justify-content-end">
+          <Navbar.Text>
+            Signed in as: <a href="#login">Mark Otto</a>
+          </Navbar.Text>
+        </Navbar.Collapse>
+      </Container>
+    </Navbar>
   )
 }
 

@@ -1,14 +1,15 @@
 import { dummyData } from "../../dummy-data";
-import { Grid, Row, Col, Card, CardGroup } from 'react-bootstrap';
-import noImage from '../../assets/no-image.jpg'
+import { Row, Card, CardGroup } from 'react-bootstrap';
+import noImage from '../../assets/image-not-found-1-scaled.png'
+import classes from './UserCard.module.css'
 
 const User = ({ onLogout }) => {
 
   const articles = dummyData.map(article => {
     const image = article.urlToImage ? article.urlToImage : noImage
     return (
-      <Card key={article.title} style={{ 'overflow': 'auto' }}>
-        <Card.Img variant="top" src={image} />
+      <Card key={article.title} className={classes.card}>
+        <Card.Img variant="top" src={image} className={classes['card-image']} />
         <Card.Body>
           <Card.Title>{article.title}</Card.Title>
           <Card.Text>

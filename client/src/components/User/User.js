@@ -56,7 +56,7 @@ const User = ({ onLogout }) => {
           </Col>
         </Form.Group>
         <Button variant="primary" type="submit">
-          Submit
+          Search
         </Button>
       </Form>
       <CardGroup>

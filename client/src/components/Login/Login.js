@@ -1,10 +1,15 @@
-import { useState } from "react";
+import { useState, useContext, useReducer } from "react";
+// import { authReducer } from "../../store/authReducer";
+import { AuthContext } from "../../store/authContext";
 import classes from './Login.module.css';
 import { Form, Button, Col } from 'react-bootstrap';
 
-const Login = (props) => {
-  const [email, setEmail] = useState("");
-  const [password, setPassword] = useState("");
+const Login = ({ setEmail, setIsLoggedIn, setPassword, email, password }) => {
+  // const [email, setEmail] = useState("");
+  // const [password, setPassword] = useState("");
+  // const [loginState, dispatchLogin] = useReducer(authReducer, { username: '', isLoggedIn: null });
+  const authContext = useContext(AuthContext)
+  console.log('this is authContext', authContext)
 
   const onEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,7 +21,7 @@ const Login = (props) => {
 
   const loginHandler = (e) => {
     e.preventDefault();
-    props.setIsLoggedIn(true);
+    setIsLoggedIn(true);
   }
 
   return (

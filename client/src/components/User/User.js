@@ -46,9 +46,6 @@ const User = ({ onLogout }) => {
   return (
     <div>
       <h3>User component</h3>
-
-      <Button variant="secondary" onClick={onLogout}>Logout</Button>
-
       <Form onSubmit={onSearchSubmit}>
         <Form.Group className="mb-3" controlId="articleSearch">
           <Col sm="6">

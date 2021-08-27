@@ -1,19 +1,18 @@
-.login-container {
-   /* height: 100%; */
+.register-container {
    display: flex;
    justify-content: center;
    align-items: center;
    padding-top: 50px;
 }
 
-.login-card {
+.register-card {
   box-shadow: 0 4px 8px 0 rgba(0,0,0,0.2);
   border-radius: 3px;
   width: 75%;
-  height: 300px;
+  height: 350px;
 }
 
-.login-card-header {
+.register-card-header {
   text-align: center;
   color: white;
   background-color: blue;
@@ -22,7 +21,7 @@
   border-top-right-radius: 3px;
 }
 
-.login-inputs {
+.register-inputs {
   margin: 20px
 }
 

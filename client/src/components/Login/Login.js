@@ -43,11 +43,11 @@ const Login = ({ setEmail, setIsLoggedIn, setPassword, email, password }) => {
                 <Form.Control type="password" name="password" value={password} onChange={onPasswordChnage} placeholder="Password" />
               </Col>
             </Form.Group>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" className={classes['submit-button']}>
               Submit
             </Button>
             <br />
-            <Link to="/register">Create an account</Link>
+            <Link to="/register">Register</Link>
           </div>
         </div>
       </Form>

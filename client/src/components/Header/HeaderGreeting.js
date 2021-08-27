@@ -13,7 +13,7 @@ const HeaderGreeting = ({ isLoggedIn, onLogout }) => {
   }
   return (
     <>
-      <p>Please Login or Register</p>
+      <p>Login or Register</p>
     </>
   )
 }

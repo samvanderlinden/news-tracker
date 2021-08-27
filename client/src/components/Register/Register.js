@@ -1,56 +1,49 @@
-import { useHistory } from "react-router";
 import { AuthContext } from "../../store/authContext";
 import { useContext } from "react";
 import { Form, Button, Col } from 'react-bootstrap';
 import { Link } from "react-router-dom";
-import classes from '../Login/Login.module.css';
+import classes from './Register.module.css';
 
-const Register = () => {
+const Register = ({ setUsername, setEmail, setPassword }) => {
   const authCtxt = useContext(AuthContext);
-  const { username, email, password } = authCtxt;
+  const { registerUsername, registerEmail, registerPassword } = authCtxt;
 
   const onUsernameChange = (e) => {
-    console.log(e.target.value);
+    setUsername(e.target.value);
   }
 
   const onEmailChange = (e) => {
-    console.log(e.target.value);
+    setEmail(e.target.value);
   }
 
-  const onPasswordChnage = (e) => {
-    console.log(e.target.value)
+  const onPasswordChange = (e) => {
+    setPassword(e.target.value)
   }
-  console.log('register authCtxt', authCtxt);
-  // let history = useHistory();
-
-  // const handleClick = () => {
-  //   history.push("/");
-  // }
 
   return (
-    <div className={classes['login-container']}>
-      <Form className={classes['login-card']}>
+    <div className={classes['register-container']}>
+      <Form className={classes['register-card']}>
         <div>
-          <div className={classes['login-card-header']}>
+          <div className={classes['register-card-header']}>
             <h2>Register</h2>
           </div>
-          <div className={classes['login-inputs']}>
+          <div className={classes['register-inputs']}>
             <Form.Group className="mb-3" controlId="registerUsername">
               <Col sm="10">
-                <Form.Control type="text" name="username" value={username} onChange={onUsernameChange} placeholder="Username" />
+                <Form.Control type="text" name="username" value={registerUsername} onChange={onUsernameChange} placeholder="Username" />
               </Col>
             </Form.Group>
             <Form.Group className="mb-3" controlId="registerEmail">
               <Col sm="10">
-                <Form.Control type="text" name="email" value={email} onChange={onEmailChange} placeholder="Email" />
+                <Form.Control type="text" name="email" value={registerEmail} onChange={onEmailChange} placeholder="Email" />
               </Col>
             </Form.Group>
             <Form.Group className="mb-3" controlId="registerPassword">
               <Col sm="10">
-                <Form.Control type="password" name="password" value={password} onChange={onPasswordChnage} placeholder="Password" />
+                <Form.Control type="password" name="password" value={registerPassword} onChange={onPasswordChange} placeholder="Password" />
               </Col>
             </Form.Group>
-            <Button type="submit" variant="primary">
+            <Button type="submit" variant="primary" className={classes['submit-button']}>
               Submit
             </Button>
             <br />

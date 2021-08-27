@@ -16,11 +16,12 @@ import Register from './components/Register/Register';
 
 
 export default function App() {
-
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [username, setUsername] = useState("");
+  const [registerEmail, setRegisterEmail] = useState("");
+  const [registerPassword, setRegisterPassword] = useState("");
+  const [registerUsername, setRegisterUsername] = useState("");
 
   const logoutHandler = () => {
     setIsLoggedIn(false)
@@ -37,7 +38,9 @@ export default function App() {
     <AuthContext.Provider value={{
       email: email,
       password: password,
-      username: username,
+      registerEmail: registerEmail,
+      registerPassword: registerPassword,
+      registerUsername: registerUsername,
       isLoggedIn: isLoggedIn,
       login: loginHandler,
       logout: logoutHandler
@@ -71,7 +74,7 @@ export default function App() {
             {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
           </Route>
           <Route path="/register">
-            {isLoggedIn ? <Redirect to="/search" /> : <Register />}
+            {isLoggedIn ? <Redirect to="/search" /> : <Register email={registerEmail} assword={registerPassword} setEmail={setRegisterEmail} setPassword={setRegisterPassword} username={registerUsername} setUsername={setRegisterUsername} />}
           </Route>
           <Route path="/">
             {isLoggedIn ? <Redirect to="/search" /> : <Login setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} onLogIn={loginHandler} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}

@@ -11,6 +11,8 @@ import {
   Route,
   Redirect
 } from "react-router-dom";
+import Favorites from './components/User/Favorites';
+import Register from './components/Register/Register';
 
 
 export default function App() {
@@ -18,6 +20,7 @@ export default function App() {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [username, setUsername] = useState("");
 
   const logoutHandler = () => {
     setIsLoggedIn(false)
@@ -25,7 +28,8 @@ export default function App() {
     setEmail('');
   }
 
-  const loginHandler = () => {
+  const loginHandler = (e) => {
+    e.preventDefault();
     setIsLoggedIn(true)
   }
 
@@ -33,19 +37,24 @@ export default function App() {
     <AuthContext.Provider value={{
       email: email,
       password: password,
-      isLoggedIn: isLoggedIn
+      username: username,
+      isLoggedIn: isLoggedIn,
+      login: loginHandler,
+      logout: logoutHandler
     }}>
       <Router>
         <Navbar bg="dark" variant="dark">
           <Container>
-            <Nav className="me-auto">
-              <LinkContainer to="/">
-                <Nav.Link>Login</Nav.Link>
+            {isLoggedIn && <Nav className="me-auto">
+              <LinkContainer to="/favorites">
+                <Nav.Link>Favorites</Nav.Link>
               </LinkContainer>
-              <LinkContainer to="/user">
-                <Nav.Link>User</Nav.Link>
+            </Nav>}
+            {isLoggedIn && <Nav className="me-auto">
+              <LinkContainer to="/search">
+                <Nav.Link>Search</Nav.Link>
               </LinkContainer>
-            </Nav>
+            </Nav>}
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
                 <HeaderGreeting isLoggedIn={isLoggedIn} onLogout={logoutHandler} />
@@ -55,11 +64,17 @@ export default function App() {
         </Navbar>
 
         <Switch>
-          <Route path="/user">
+          <Route path="/search">
             {!isLoggedIn ? <Redirect to="/" /> : <User onLogout={logoutHandler} setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} />}
           </Route>
+          <Route path="/favorites">
+            {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
+          </Route>
+          <Route path="/register">
+            {isLoggedIn ? <Redirect to="/search" /> : <Register />}
+          </Route>
           <Route path="/">
-            {isLoggedIn ? <Redirect to="/user" /> : <Login setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} onLogIn={loginHandler} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}
+            {isLoggedIn ? <Redirect to="/search" /> : <Login setIsLoggedIn={setIsLoggedIn} isLoggedIn={isLoggedIn} onLogIn={loginHandler} email={email} password={password} setEmail={setEmail} setPassword={setPassword} />}
           </Route>
         </Switch>
       </Router>

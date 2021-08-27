@@ -1,11 +1,13 @@
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import { dummyData } from "../../dummy-data";
 import { Row, Card, CardGroup, Form, Button, Col } from 'react-bootstrap';
 import noImage from '../../assets/image-not-found-1-scaled.png'
-import classes from './UserCard.module.css'
+import classes from './UserCard.module.css';
+import { AuthContext } from "../../store/authContext";
 
 const User = ({ onLogout }) => {
-
+  const authCtxt = useContext(AuthContext);
+  console.log('User authCtxt', authCtxt);
   const [searchTerm, setSearchTerm] = useState('');
   const [listOfArticles, setListofArticles] = useState([]);
 
@@ -13,6 +15,7 @@ const User = ({ onLogout }) => {
   const onSearchChange = (e) => {
     setSearchTerm(e.target.value);
   }
+
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
@@ -28,6 +31,7 @@ const User = ({ onLogout }) => {
               This is a longer card with supporting text below as a natural
               lead-in to additional content. This content is a little bit longer.
             </Card.Text>
+            <Button variant="outline-primary">Add to Favorites</Button>
           </Card.Body>
         </Card>
       )

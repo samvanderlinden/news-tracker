@@ -7,13 +7,13 @@ const HeaderGreeting = ({ isLoggedIn, onLogout }) => {
   if (isLoggedIn) {
     return (
       <>
-        {`Welcome ${authContext.email}`} <Button variant="secondary" size="sm" onClick={onLogout}>Logout</Button>
+        {`Welcome ${authContext.email}`} <Button variant="outline-secondary" size="sm" onClick={onLogout}>Logout</Button>
       </>
     )
   }
   return (
     <>
-      <p>Please Login</p>
+      <p>Please Login or Register</p>
     </>
   )
 }

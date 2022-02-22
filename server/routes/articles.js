@@ -65,7 +65,6 @@ route.get('/top-headlines/q?', verify, async (req, res) => {
 
     const articlesData = articlesResponse.data;
 
-
     res.send(articlesData);
 
   } catch (error) {

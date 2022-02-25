@@ -1,51 +1,52 @@
 import { useState, useEffect, useContext } from "react";
 import { dummyData } from "../../dummy-data";
-import { Row, Card, CardGroup, Form, Button, Col } from 'react-bootstrap';
-import noImage from '../../assets/image-not-found-1-scaled.png'
-import classes from './UserCard.module.css';
+import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
+import noImage from "../../assets/image-not-found-1-scaled.png";
+import classes from "./UserCard.module.css";
 import { AuthContext } from "../../store/authContext";
 
 const User = ({ onLogout }) => {
   const authCtxt = useContext(AuthContext);
-  console.log('User authCtxt', authCtxt);
-  const [searchTerm, setSearchTerm] = useState('');
+  const [searchTerm, setSearchTerm] = useState("");
   const [listOfArticles, setListofArticles] = useState([]);
-
 
   const onSearchChange = (e) => {
     setSearchTerm(e.target.value);
-  }
-
+  };
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
 
-    const articles = dummyData.map(article => {
-      const image = article.urlToImage ? article.urlToImage : noImage
+    const articles = dummyData.map((article) => {
+      const image = article.urlToImage ? article.urlToImage : noImage;
       return (
         <Card key={article.title} className={classes.card}>
-          <Card.Img variant="top" src={image} className={classes['card-image']} />
+          <Card.Img
+            variant="top"
+            src={image}
+            className={classes["card-image"]}
+          />
           <Card.Body>
             <Card.Title>{article.title}</Card.Title>
             <Card.Text>
               This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit longer.
+              lead-in to additional content. This content is a little bit
+              longer.
             </Card.Text>
             <Button variant="outline-primary">Add to Favorites</Button>
           </Card.Body>
         </Card>
-      )
+      );
     });
 
     setListofArticles(articles);
 
-    setSearchTerm('');
-
-  }
+    setSearchTerm("");
+  };
 
   useEffect(() => {
     console.log(searchTerm);
-  }, [searchTerm, listOfArticles])
+  }, [searchTerm, listOfArticles]);
 
   return (
     <div>
@@ -53,7 +54,12 @@ const User = ({ onLogout }) => {
       <Form onSubmit={onSearchSubmit}>
         <Form.Group className="mb-3" controlId="articleSearch">
           <Col sm="6">
-            <Form.Control type="text" value={searchTerm} onChange={onSearchChange} placeholder="Search for articles" />
+            <Form.Control
+              type="text"
+              value={searchTerm}
+              onChange={onSearchChange}
+              placeholder="Search for articles"
+            />
           </Col>
         </Form.Group>
         <Button variant="primary" type="submit">
@@ -61,12 +67,12 @@ const User = ({ onLogout }) => {
         </Button>
       </Form>
       <CardGroup>
-        <Row xs={1} sm={2} md={3} >
+        <Row xs={1} sm={2} md={3}>
           {listOfArticles}
         </Row>
       </CardGroup>
     </div>
-  )
-}
+  );
+};
 
 export default User;

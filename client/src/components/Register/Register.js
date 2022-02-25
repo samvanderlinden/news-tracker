@@ -23,37 +23,31 @@ const Register = ({ setUsername, setEmail, setPassword }) => {
     <>
       <AuthCard header="Register" mainScreen="login" submit={authCtxt.register}>
         <Form.Group className="mb-3" controlId="registerUsername">
-          <Col sm="10">
-            <Form.Control
-              type="text"
-              name="username"
-              value={registerUsername}
-              onChange={onUsernameChange}
-              placeholder="Username"
-            />
-          </Col>
+          <Form.Control
+            type="text"
+            name="username"
+            value={registerUsername}
+            onChange={onUsernameChange}
+            placeholder="Username"
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="registerEmail">
-          <Col sm="10">
-            <Form.Control
-              type="text"
-              name="email"
-              value={registerEmail}
-              onChange={onEmailChange}
-              placeholder="Email"
-            />
-          </Col>
+          <Form.Control
+            type="text"
+            name="email"
+            value={registerEmail}
+            onChange={onEmailChange}
+            placeholder="Email"
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="registerPassword">
-          <Col sm="10">
-            <Form.Control
-              type="password"
-              name="password"
-              value={registerPassword}
-              onChange={onPasswordChange}
-              placeholder="Password"
-            />
-          </Col>
+          <Form.Control
+            type="password"
+            name="password"
+            value={registerPassword}
+            onChange={onPasswordChange}
+            placeholder="Password"
+          />
         </Form.Group>
       </AuthCard>
     </>

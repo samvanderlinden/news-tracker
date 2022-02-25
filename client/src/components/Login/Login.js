@@ -18,26 +18,22 @@ const Login = ({ setEmail, setPassword, email, password }) => {
     <>
       <AuthCard header="Login" mainScreen="register" submit={authContext.login}>
         <Form.Group className="mb-3" controlId="usernameLogin">
-          <Col sm="10">
-            <Form.Control
-              type="text"
-              name="username"
-              value={email}
-              onChange={onEmailChange}
-              placeholder="Username"
-            />
-          </Col>
+          <Form.Control
+            type="text"
+            name="username"
+            value={email}
+            onChange={onEmailChange}
+            placeholder="Username"
+          />
         </Form.Group>
         <Form.Group className="mb-3" controlId="passwordLogin">
-          <Col sm="10">
-            <Form.Control
-              type="password"
-              name="password"
-              value={password}
-              onChange={onPasswordChnage}
-              placeholder="Password"
-            />
-          </Col>
+          <Form.Control
+            type="password"
+            name="password"
+            value={password}
+            onChange={onPasswordChnage}
+            placeholder="Password"
+          />
         </Form.Group>
       </AuthCard>
     </>

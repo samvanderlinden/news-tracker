@@ -1,5 +1,7 @@
 # Check List
+
 ## Server checklist
+
 - [x] Create server side auth route
 - [x] Create server side post route
 - [x] Create server side articles route
@@ -9,4 +11,6 @@
 - [ ] Finish error handling in server side routes
 
 ## Client checklist
+
 - [x] Initialize Login, Logout, User components
+- [ ] Transition state management to Redux

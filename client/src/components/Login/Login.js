@@ -1,10 +1,20 @@
 import { useState, useContext, useReducer } from "react";
+import { useSelector, useDispatch } from "react-redux";
+import { login } from "../../store/authSlice.js";
 import { AuthContext } from "../../store/authContext";
 import { Form, Col } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
 
 const Login = ({ setEmail, setPassword, email, password }) => {
   const authContext = useContext(AuthContext);
+
+  const dispatch = useDispatch();
+
+  const loginHandler = (e) => {
+    e.preventDefault();
+    dispatch(login());
+    console.log("dispatch login");
+  };
 
   const onEmailChange = (e) => {
     setEmail(e.target.value);
@@ -16,7 +26,7 @@ const Login = ({ setEmail, setPassword, email, password }) => {
 
   return (
     <>
-      <AuthCard header="Login" mainScreen="register" submit={authContext.login}>
+      <AuthCard header="Login" mainScreen="register" submit={loginHandler}>
         <Form.Group className="mb-3" controlId="usernameLogin">
           <Form.Control
             type="text"

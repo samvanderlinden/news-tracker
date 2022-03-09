@@ -14,3 +14,4 @@
 
 - [x] Initialize Login, Logout, User components
 - [ ] Transition state management to Redux
+- [ ] Transition React Router to v6

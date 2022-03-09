@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useSelector, useDispatch } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Login from "./components/Login/Login";
@@ -21,6 +22,8 @@ export default function App() {
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
+
+  const auth = useSelector((state) => state.auth.value);
 
   const logoutHandler = () => {
     setIsLoggedIn(false);
@@ -56,14 +59,14 @@ export default function App() {
       <Router>
         <Navbar bg="dark" variant="dark">
           <Container>
-            {isLoggedIn && (
+            {auth && (
               <Nav className="me-auto">
                 <LinkContainer to="/favorites">
                   <Nav.Link>Favorites</Nav.Link>
                 </LinkContainer>
               </Nav>
             )}
-            {isLoggedIn && (
+            {auth && (
               <Nav className="me-auto">
                 <LinkContainer to="/search">
                   <Nav.Link>Search</Nav.Link>
@@ -72,10 +75,7 @@ export default function App() {
             )}
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
-                <HeaderGreeting
-                  isLoggedIn={isLoggedIn}
-                  onLogout={logoutHandler}
-                />
+                <HeaderGreeting isLoggedIn={auth} onLogout={logoutHandler} />
               </Navbar.Text>
             </Navbar.Collapse>
           </Container>
@@ -83,21 +83,21 @@ export default function App() {
 
         <Switch>
           <Route path="/search">
-            {!isLoggedIn ? (
+            {!auth ? (
               <Redirect to="/" />
             ) : (
               <User
                 onLogout={logoutHandler}
                 setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn}
+                isLoggedIn={auth}
               />
             )}
           </Route>
           <Route path="/favorites">
-            {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
+            {!auth ? <Redirect to="/" /> : <Favorites />}
           </Route>
           <Route path="/register">
-            {isLoggedIn ? (
+            {auth ? (
               <Redirect to="/search" />
             ) : (
               <Register
@@ -111,7 +111,7 @@ export default function App() {
             )}
           </Route>
           <Route path="/">
-            {isLoggedIn ? (
+            {auth ? (
               <Redirect to="/search" />
             ) : (
               <Login

@@ -7,17 +7,11 @@ const AuthCard = (props) => {
   return (
     <div className={classes.container}>
       <Form onSubmit={props.submit} className={classes.card}>
-        {/* <div className={classes["card-header"]}>{props.header}</div> */}
-        {/* <p className={classes["card-header"]}>{props.header}</p> */}
         <span className={classes["card-header"]}>{props.header}</span>
         <div className={classes.inputs}>
           {props.children}
 
-          <Button
-            type="submit"
-            variant="primary"
-            className={classes["submit-button"]}
-          >
+          <Button type="submit" className={classes["submit-button"]}>
             Submit
           </Button>
           <br />

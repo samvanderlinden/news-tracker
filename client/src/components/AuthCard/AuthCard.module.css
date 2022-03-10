@@ -19,7 +19,7 @@
 
 .card-header {
   font-size: 30px;
-  color: black;
+  color: white;
   margin: auto;
   display: table;
   padding-top: 15px;
@@ -31,4 +31,18 @@
 
 .submit-button {
   margin-bottom: 15px;
+  width: 100%;
+  opacity: 0.75;
+  background-color: #c19434;
+  color: white;
+}
+
+.submit-button:hover {
+  background-color: #dbba00;
+  color: white;
+  border-color: white;
+}
+
+.btn-primary {
+  border-color: none;
 }

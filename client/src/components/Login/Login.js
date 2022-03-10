@@ -22,7 +22,7 @@ const Login = ({ setEmail, setPassword, email, password }) => {
 
   return (
     <>
-      <AuthCard header="Login" mainScreen="register" submit={loginHandler}>
+      <AuthCard header="LOGIN" mainScreen="register" submit={loginHandler}>
         <Form.Group className="mb-3" controlId="usernameLogin">
           <Form.Control
             type="text"

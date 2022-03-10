@@ -1,13 +1,9 @@
-import { useState, useContext, useReducer } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice.js";
-import { AuthContext } from "../../store/authContext";
-import { Form, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
 
 const Login = ({ setEmail, setPassword, email, password }) => {
-  const authContext = useContext(AuthContext);
-
   const dispatch = useDispatch();
 
   const loginHandler = (e) => {

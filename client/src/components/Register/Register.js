@@ -1,6 +1,6 @@
 import { AuthContext } from "../../store/authContext";
 import { useContext } from "react";
-import { Form, Col } from "react-bootstrap";
+import { Form } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
 
 const Register = ({ setUsername, setEmail, setPassword }) => {

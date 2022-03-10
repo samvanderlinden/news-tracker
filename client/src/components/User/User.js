@@ -1,12 +1,10 @@
-import { useState, useEffect, useContext } from "react";
+import { useState, useEffect } from "react";
 import { dummyData } from "../../dummy-data";
 import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
-import { AuthContext } from "../../store/authContext";
 
-const User = ({ onLogout }) => {
-  const authCtxt = useContext(AuthContext);
+const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [listOfArticles, setListofArticles] = useState([]);
 

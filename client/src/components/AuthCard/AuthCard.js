@@ -1,13 +1,15 @@
 import React from "react";
 import { Link } from "react-router-dom";
-import { Form, Button, Col } from "react-bootstrap";
+import { Form, Button } from "react-bootstrap";
 import classes from "./AuthCard.module.css";
 
 const AuthCard = (props) => {
   return (
     <div className={classes.container}>
       <Form onSubmit={props.submit} className={classes.card}>
-        <div className={classes["card-header"]}>{props.header}</div>
+        {/* <div className={classes["card-header"]}>{props.header}</div> */}
+        {/* <p className={classes["card-header"]}>{props.header}</p> */}
+        <span className={classes["card-header"]}>{props.header}</span>
         <div className={classes.inputs}>
           {props.children}
 

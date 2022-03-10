@@ -1,5 +1,5 @@
 import { useState } from "react";
-import { useSelector, useDispatch } from "react-redux";
+import { useSelector } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Login from "./components/Login/Login";
@@ -14,27 +14,16 @@ import {
 } from "react-router-dom";
 import Favorites from "./components/User/Favorites";
 import Register from "./components/Register/Register";
+import "./index.css";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
 
-  const auth = useSelector((state) => state.auth.value);
-
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-    setPassword("");
-    setEmail("");
-  };
-
-  const loginHandler = (e) => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-  };
+  const isLoggedIn = useSelector((state) => state.auth.value);
 
   const registerHandler = (e) => {
     e.preventDefault();
@@ -50,23 +39,20 @@ export default function App() {
         registerEmail: registerEmail,
         registerPassword: registerPassword,
         registerUsername: registerUsername,
-        isLoggedIn: isLoggedIn,
-        login: loginHandler,
-        logout: logoutHandler,
         register: registerHandler,
       }}
     >
       <Router>
-        <Navbar bg="dark" variant="dark">
+        <Navbar className="nav" variant="dark">
           <Container>
-            {auth && (
+            {isLoggedIn && (
               <Nav className="me-auto">
                 <LinkContainer to="/favorites">
                   <Nav.Link>Favorites</Nav.Link>
                 </LinkContainer>
               </Nav>
             )}
-            {auth && (
+            {isLoggedIn && (
               <Nav className="me-auto">
                 <LinkContainer to="/search">
                   <Nav.Link>Search</Nav.Link>
@@ -75,7 +61,7 @@ export default function App() {
             )}
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
-                <HeaderGreeting isLoggedIn={auth} onLogout={logoutHandler} />
+                <HeaderGreeting isLoggedIn={isLoggedIn} />
               </Navbar.Text>
             </Navbar.Collapse>
           </Container>
@@ -83,21 +69,13 @@ export default function App() {
 
         <Switch>
           <Route path="/search">
-            {!auth ? (
-              <Redirect to="/" />
-            ) : (
-              <User
-                onLogout={logoutHandler}
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={auth}
-              />
-            )}
+            {!isLoggedIn ? <Redirect to="/" /> : <User />}
           </Route>
           <Route path="/favorites">
-            {!auth ? <Redirect to="/" /> : <Favorites />}
+            {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
           </Route>
           <Route path="/register">
-            {auth ? (
+            {isLoggedIn ? (
               <Redirect to="/search" />
             ) : (
               <Register
@@ -111,13 +89,11 @@ export default function App() {
             )}
           </Route>
           <Route path="/">
-            {auth ? (
+            {isLoggedIn ? (
               <Redirect to="/search" />
             ) : (
               <Login
-                setIsLoggedIn={setIsLoggedIn}
                 isLoggedIn={isLoggedIn}
-                onLogIn={loginHandler}
                 email={email}
                 password={password}
                 setEmail={setEmail}

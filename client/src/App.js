@@ -1,4 +1,5 @@
-import { useState, useContext } from "react";
+import { useState } from "react";
+import { useSelector } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import { LinkContainer } from "react-router-bootstrap";
 import Login from "./components/Login/Login";
@@ -13,25 +14,16 @@ import {
 } from "react-router-dom";
 import Favorites from "./components/User/Favorites";
 import Register from "./components/Register/Register";
+import "./index.css";
 
 export default function App() {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [registerEmail, setRegisterEmail] = useState("");
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
 
-  const logoutHandler = () => {
-    setIsLoggedIn(false);
-    setPassword("");
-    setEmail("");
-  };
-
-  const loginHandler = (e) => {
-    e.preventDefault();
-    setIsLoggedIn(true);
-  };
+  const isLoggedIn = useSelector((state) => state.auth.value);
 
   const registerHandler = (e) => {
     e.preventDefault();
@@ -47,14 +39,11 @@ export default function App() {
         registerEmail: registerEmail,
         registerPassword: registerPassword,
         registerUsername: registerUsername,
-        isLoggedIn: isLoggedIn,
-        login: loginHandler,
-        logout: logoutHandler,
         register: registerHandler,
       }}
     >
       <Router>
-        <Navbar bg="dark" variant="dark">
+        <Navbar className="nav" variant="dark">
           <Container>
             {isLoggedIn && (
               <Nav className="me-auto">
@@ -72,10 +61,7 @@ export default function App() {
             )}
             <Navbar.Collapse className="justify-content-end">
               <Navbar.Text>
-                <HeaderGreeting
-                  isLoggedIn={isLoggedIn}
-                  onLogout={logoutHandler}
-                />
+                <HeaderGreeting isLoggedIn={isLoggedIn} />
               </Navbar.Text>
             </Navbar.Collapse>
           </Container>
@@ -83,15 +69,7 @@ export default function App() {
 
         <Switch>
           <Route path="/search">
-            {!isLoggedIn ? (
-              <Redirect to="/" />
-            ) : (
-              <User
-                onLogout={logoutHandler}
-                setIsLoggedIn={setIsLoggedIn}
-                isLoggedIn={isLoggedIn}
-              />
-            )}
+            {!isLoggedIn ? <Redirect to="/" /> : <User />}
           </Route>
           <Route path="/favorites">
             {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
@@ -115,9 +93,7 @@ export default function App() {
               <Redirect to="/search" />
             ) : (
               <Login
-                setIsLoggedIn={setIsLoggedIn}
                 isLoggedIn={isLoggedIn}
-                onLogIn={loginHandler}
                 email={email}
                 password={password}
                 setEmail={setEmail}

@@ -2,9 +2,10 @@ html,
 body,
 #root {
   height: 100vh;
-  background-color: #f1f1ef;
+  background-image: url("./assets/news-background.png");
+  background-size: cover;
 }
 
 .nav {
-  background-color: #578062;
+  background-color: #91c79f;
 }

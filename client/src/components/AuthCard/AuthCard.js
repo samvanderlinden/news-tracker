@@ -7,7 +7,9 @@ const AuthCard = (props) => {
   return (
     <div className={classes.container}>
       <Form onSubmit={props.submit} className={classes.card}>
-        <span className={classes["card-header"]}>{props.header}</span>
+        <span className={classes["card-header"]}>
+          {props.header.toUpperCase()}
+        </span>
         <div className={classes.inputs}>
           {props.children}
 
@@ -15,7 +17,8 @@ const AuthCard = (props) => {
             Submit
           </Button>
           <br />
-          <Link to={`/${props.mainScreen}`}>
+          <Link to={`/${props.mainScreen}`} className={classes["text-link"]}>
+            Go to{" "}
             {props.mainScreen.charAt(0).toUpperCase() +
               props.mainScreen.slice(1)}
           </Link>

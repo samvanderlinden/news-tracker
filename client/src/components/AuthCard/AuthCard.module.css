@@ -34,6 +34,7 @@
   width: 100%;
   opacity: 0.75;
   background-color: #c19434;
+  border-color: #c19434;
   color: white;
 }
 
@@ -43,6 +44,13 @@
   border-color: white;
 }
 
-.btn-primary {
-  border-color: none;
+.text-link {
+  color: white;
+  text-decoration: inherit;
+  font-size: 18px;
+}
+
+.text-link:hover {
+  color: white;
+  font-weight: bold;
 }

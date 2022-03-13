@@ -4,6 +4,8 @@ body,
   height: 100vh;
   background-image: url("./assets/news-background.png");
   background-size: cover;
+  background-repeat: no-repeat;
+  background-attachment: fixed;
 }
 
 .nav {

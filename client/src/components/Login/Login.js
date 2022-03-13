@@ -2,6 +2,8 @@ import { useDispatch } from "react-redux";
 import { login } from "../../store/authSlice.js";
 import { Form } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
+import TypewriterContent from "../TypewriterContent/TypewriterContent.js";
+import classes from "./Login.module.css";
 
 const Login = ({ setEmail, setPassword, email, password }) => {
   const dispatch = useDispatch();
@@ -21,7 +23,8 @@ const Login = ({ setEmail, setPassword, email, password }) => {
   };
 
   return (
-    <>
+    <div className={classes.container}>
+      <TypewriterContent />
       <AuthCard header="Login" mainScreen="register" submit={loginHandler}>
         <Form.Group className="mb-3" controlId="usernameLogin">
           <Form.Control
@@ -42,7 +45,7 @@ const Login = ({ setEmail, setPassword, email, password }) => {
           />
         </Form.Group>
       </AuthCard>
-    </>
+    </div>
   );
 };
 

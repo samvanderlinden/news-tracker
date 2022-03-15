@@ -3,6 +3,7 @@ body,
 #root {
   height: 100vh;
   background-image: url("./assets/news-background.png");
+  background-position: center center;
   background-size: cover;
   background-repeat: no-repeat;
   background-attachment: fixed;

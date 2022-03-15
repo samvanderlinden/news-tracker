@@ -4,7 +4,6 @@ import { configureStore } from "@reduxjs/toolkit";
 import { Provider } from "react-redux";
 import authReducer from "./store/authSlice";
 import App from "./App";
-import AppContent from "./components/AppContent/AppContent";
 import "./index.css";
 
 const store = configureStore({

@@ -1,17 +1,11 @@
 import { useState } from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
-import { LinkContainer } from "react-router-bootstrap";
 import Login from "./components/Login/Login";
 import User from "./components/User/User";
 import HeaderGreeting from "./components/Header/HeaderGreeting";
 import { AuthContext } from "./store/authContext";
-import {
-  BrowserRouter as Router,
-  Switch,
-  Route,
-  Redirect,
-} from "react-router-dom";
+import { Routes, Route, Navigate, useNavigate } from "react-router-dom";
 import Favorites from "./components/User/Favorites";
 import Register from "./components/Register/Register";
 import "./index.css";
@@ -24,6 +18,8 @@ export default function App() {
   const [registerUsername, setRegisterUsername] = useState("");
 
   const isLoggedIn = useSelector((state) => state.auth.value);
+
+  const navTo = useNavigate();
 
   const registerHandler = (e) => {
     e.preventDefault();
@@ -42,41 +38,43 @@ export default function App() {
         register: registerHandler,
       }}
     >
-      <Router>
-        <Navbar className="nav" variant="dark">
-          <Container>
-            {isLoggedIn && (
-              <Nav className="me-auto">
-                <LinkContainer to="/favorites">
-                  <Nav.Link>Favorites</Nav.Link>
-                </LinkContainer>
-              </Nav>
-            )}
-            {isLoggedIn && (
-              <Nav className="me-auto">
-                <LinkContainer to="/search">
-                  <Nav.Link>Search</Nav.Link>
-                </LinkContainer>
-              </Nav>
-            )}
-            <Navbar.Collapse className="justify-content-end">
-              <Navbar.Text>
-                <HeaderGreeting isLoggedIn={isLoggedIn} />
-              </Navbar.Text>
-            </Navbar.Collapse>
-          </Container>
-        </Navbar>
+      <Navbar className="nav" variant="dark">
+        <Container>
+          {isLoggedIn && (
+            <Nav className="me-auto">
+              <Nav.Link onClick={() => navTo("/favorites")}>Favorites</Nav.Link>
+            </Nav>
+          )}
+          {isLoggedIn && (
+            <Nav className="me-auto">
+              <Nav.Link onClick={() => navTo("/search")}>Search</Nav.Link>
+            </Nav>
+          )}
+          <Navbar.Collapse className="justify-content-end">
+            <Navbar.Text>
+              <HeaderGreeting isLoggedIn={isLoggedIn} />
+            </Navbar.Text>
+          </Navbar.Collapse>
+        </Container>
+      </Navbar>
 
-        <Switch>
-          <Route path="/search">
-            {!isLoggedIn ? <Redirect to="/" /> : <User />}
-          </Route>
-          <Route path="/favorites">
-            {!isLoggedIn ? <Redirect to="/" /> : <Favorites />}
-          </Route>
-          <Route path="/register">
-            {isLoggedIn ? (
-              <Redirect to="/search" />
+      <h1>Learn React</h1>
+
+      <Routes>
+        <Route
+          path="/search"
+          element={!isLoggedIn ? <Navigate to="/" /> : <User />}
+        />
+        <Route
+          path="/favorites"
+          element={!isLoggedIn ? <Navigate to="/" /> : <Favorites />}
+        />
+        <Route path="/login" element={<Navigate to="/" />} />
+        <Route
+          path="/register"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/search" />
             ) : (
               <Register
                 email={registerEmail}
@@ -86,11 +84,14 @@ export default function App() {
                 username={registerUsername}
                 setUsername={setRegisterUsername}
               />
-            )}
-          </Route>
-          <Route path="/">
-            {isLoggedIn ? (
-              <Redirect to="/search" />
+            )
+          }
+        />
+        <Route
+          path="/"
+          element={
+            isLoggedIn ? (
+              <Navigate to="/search" />
             ) : (
               <Login
                 isLoggedIn={isLoggedIn}
@@ -99,10 +100,10 @@ export default function App() {
                 setEmail={setEmail}
                 setPassword={setPassword}
               />
-            )}
-          </Route>
-        </Switch>
-      </Router>
+            )
+          }
+        />
+      </Routes>
     </AuthContext.Provider>
   );
 }

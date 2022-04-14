@@ -13,5 +13,5 @@
 ## Client checklist
 
 - [x] Initialize Login, Logout, User components
-- [ ] Transition state management to Redux
-- [ ] Transition React Router to v6
+- [x] Transition state management to Redux
+- [x] Transition React Router to v6

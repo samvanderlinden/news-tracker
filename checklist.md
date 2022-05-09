@@ -15,3 +15,4 @@
 - [x] Initialize Login, Logout, User components
 - [x] Transition state management to Redux
 - [x] Transition React Router to v6
+- [x] Use thunks to dispatch GET top-headlines articles

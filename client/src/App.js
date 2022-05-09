@@ -5,10 +5,10 @@ import Login from "./components/Login/Login";
 import User from "./components/User/User";
 import HeaderGreeting from "./components/Header/HeaderGreeting";
 import { AuthContext } from "./store/authContext";
-import { Routes, Route, Navigate, useNavigate, Link } from "react-router-dom";
+import { Routes, Route, Navigate, Link } from "react-router-dom";
 import Favorites from "./components/User/Favorites";
 import Register from "./components/Register/Register";
-import "./index.css";
+import classes from "./App.module.css";
 
 export default function App() {
   const [email, setEmail] = useState("");
@@ -19,14 +19,13 @@ export default function App() {
 
   const isLoggedIn = useSelector((state) => state.auth.value);
 
-  // const navTo = useNavigate();
-
   const registerHandler = (e) => {
     e.preventDefault();
     setRegisterEmail("");
     setRegisterPassword("");
     setRegisterUsername("");
   };
+
   return (
     <AuthContext.Provider
       value={{
@@ -42,14 +41,16 @@ export default function App() {
         <Container>
           {isLoggedIn && (
             <Nav className="me-auto">
-              {/* <Nav.Link onClick={() => navTo("/favorites")}>Favorites</Nav.Link> */}
-              <Link to="/favorites">Favorites</Link>
+              <Link to="/favorites" className={classes.link}>
+                Favorites
+              </Link>
             </Nav>
           )}
           {isLoggedIn && (
             <Nav className="me-auto">
-              {/* <Nav.Link onClick={() => navTo("/search")}>Search</Nav.Link> */}
-              <Link to="/search">Search</Link>
+              <Link to="/search" className={classes.link}>
+                Search
+              </Link>
             </Nav>
           )}
           <Navbar.Collapse className="justify-content-end">

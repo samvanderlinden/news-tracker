@@ -1,0 +1,10 @@
+.link {
+  color: #f8f9fa;
+  text-decoration: none;
+  padding: 5px;
+}
+
+.link:hover {
+  color: #f8f9fa;
+  font-size: 115%;
+}

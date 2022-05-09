@@ -9,7 +9,6 @@ const Login = ({ setEmail, setPassword, email, password }) => {
   const loginHandler = (e) => {
     e.preventDefault();
     dispatch(login());
-    console.log("dispatch login");
   };
 
   const onEmailChange = (e) => {

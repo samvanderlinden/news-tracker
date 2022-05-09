@@ -1,50 +1,50 @@
 import { useState, useEffect } from "react";
-import { dummyData } from "../../dummy-data";
+import { useDispatch, useSelector } from "react-redux";
 import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
+import { fetchArticles } from "../../store/articlesSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [listOfArticles, setListofArticles] = useState([]);
+  const dispatch = useDispatch();
 
   const onSearchChange = (e) => {
     setSearchTerm(e.target.value);
   };
 
+  const articlesList = useSelector((state) => state.articles.articles);
+
   const onSearchSubmit = (e) => {
     e.preventDefault();
 
-    const articles = dummyData.map((article) => {
-      const image = article.urlToImage ? article.urlToImage : noImage;
-      return (
-        <Card key={article.title} className={classes.card}>
-          <Card.Img
-            variant="top"
-            src={image}
-            className={classes["card-image"]}
-          />
-          <Card.Body>
-            <Card.Title>{article.title}</Card.Title>
-            <Card.Text>
-              This is a longer card with supporting text below as a natural
-              lead-in to additional content. This content is a little bit
-              longer.
-            </Card.Text>
-            <Button variant="outline-primary">Add to Favorites</Button>
-          </Card.Body>
-        </Card>
-      );
-    });
+    setSearchTerm(e.target.value);
 
-    setListofArticles(articles);
+    dispatch(fetchArticles(searchTerm));
+
+    setListofArticles(articlesList);
 
     setSearchTerm("");
   };
 
+  const mappedArticlesList = articlesList.map((article) => {
+    const image = article.urlToImage ? article.urlToImage : noImage;
+    return (
+      <Card key={article.title} className={classes.card}>
+        <Card.Img variant="top" src={image} className={classes["card-image"]} />
+        <Card.Body>
+          <Card.Title>{article.title}</Card.Title>
+          <Card.Text>{article.description}</Card.Text>
+          <Button variant="outline-primary">Add to Favorites</Button>
+        </Card.Body>
+      </Card>
+    );
+  });
+
   useEffect(() => {
-    console.log(searchTerm);
-  }, [searchTerm, listOfArticles]);
+    // console.log("useEffect", listOfArticles);
+  }, [searchTerm, listOfArticles, dispatch]);
 
   return (
     <div>
@@ -66,7 +66,7 @@ const User = () => {
       </Form>
       <CardGroup>
         <Row xs={1} sm={2} md={3}>
-          {listOfArticles}
+          {mappedArticlesList}
         </Row>
       </CardGroup>
     </div>

@@ -17,7 +17,7 @@ export default function App() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
 
-  const isLoggedIn = useSelector((state) => state.auth.value);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const registerHandler = (e) => {
     e.preventDefault();

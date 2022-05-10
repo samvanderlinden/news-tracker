@@ -1,14 +1,23 @@
+import { useDispatch, useSelector } from "react-redux";
+import { useState } from "react";
 import { AuthContext } from "../../store/authContext";
 import { useContext } from "react";
 import { Form } from "react-bootstrap";
+import { registerUser } from "../../store/authSlice";
 import AuthCard from "../AuthCard/AuthCard";
 
-const Register = ({ setUsername, setEmail, setPassword }) => {
+const Register = () => {
   const authCtxt = useContext(AuthContext);
   const { registerUsername, registerEmail, registerPassword } = authCtxt;
 
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+
+  const dispatch = useDispatch();
+
   const onUsernameChange = (e) => {
-    setUsername(e.target.value);
+    setName(e.target.value);
   };
 
   const onEmailChange = (e) => {
@@ -19,14 +28,34 @@ const Register = ({ setUsername, setEmail, setPassword }) => {
     setPassword(e.target.value);
   };
 
+  const onSubmit = (e) => {
+    e.preventDefault();
+
+    const userInfo = {
+      name,
+      email,
+      password,
+    };
+
+    dispatch(registerUser(userInfo));
+
+    // setSearchTerm(e.target.value);
+
+    // dispatch(fetchArticles(searchTerm));
+
+    // setListofArticles(articlesList);
+
+    // setSearchTerm("");
+  };
+
   return (
     <>
-      <AuthCard header="Register" mainScreen="login" submit={authCtxt.register}>
+      <AuthCard header="Register" mainScreen="login" submit={onSubmit}>
         <Form.Group className="mb-3" controlId="registerUsername">
           <Form.Control
             type="text"
             name="username"
-            value={registerUsername}
+            value={name}
             onChange={onUsernameChange}
             placeholder="Username"
           />
@@ -35,7 +64,7 @@ const Register = ({ setUsername, setEmail, setPassword }) => {
           <Form.Control
             type="text"
             name="email"
-            value={registerEmail}
+            value={email}
             onChange={onEmailChange}
             placeholder="Email"
           />
@@ -44,7 +73,7 @@ const Register = ({ setUsername, setEmail, setPassword }) => {
           <Form.Control
             type="password"
             name="password"
-            value={registerPassword}
+            value={password}
             onChange={onPasswordChange}
             placeholder="Password"
           />

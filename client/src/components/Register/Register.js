@@ -1,15 +1,10 @@
-import { useDispatch, useSelector } from "react-redux";
+import { useDispatch } from "react-redux";
 import { useState } from "react";
-import { AuthContext } from "../../store/authContext";
-import { useContext } from "react";
 import { Form } from "react-bootstrap";
 import { registerUser } from "../../store/authSlice";
 import AuthCard from "../AuthCard/AuthCard";
 
 const Register = () => {
-  const authCtxt = useContext(AuthContext);
-  const { registerUsername, registerEmail, registerPassword } = authCtxt;
-
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");

@@ -12,11 +12,14 @@ export const articlesSlice = createSlice({
     searchArticles: (state, action) => {
       state.articles = action.payload;
     },
+    resetArticles: (state) => {
+      state.articles = [];
+    },
   },
 });
 
 // Action creators are generated for each case reducer function
-export const { searchArticles } = articlesSlice.actions;
+export const { searchArticles, resetArticles } = articlesSlice.actions;
 
 // Define a thunk that dispatches those action creators
 export const fetchArticles = (searchTerm) => async (dispatch) => {

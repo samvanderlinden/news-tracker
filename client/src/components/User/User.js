@@ -7,7 +7,6 @@ import { fetchArticles } from "../../store/articlesSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [listOfArticles, setListofArticles] = useState([]);
   const dispatch = useDispatch();
 
   const onSearchChange = (e) => {
@@ -15,6 +14,7 @@ const User = () => {
   };
 
   const articlesList = useSelector((state) => state.articles.articles);
+  const token = useSelector((state) => state.auth.jwtToken);
 
   const onSearchSubmit = (e) => {
     e.preventDefault();
@@ -23,12 +23,12 @@ const User = () => {
 
     dispatch(fetchArticles(searchTerm));
 
-    setListofArticles(articlesList);
-
     setSearchTerm("");
   };
 
-  const mappedArticlesList = articlesList.map((article) => {
+  const uniqueArticles = [...new Set(articlesList)];
+
+  const mappedArticlesList = uniqueArticles.map((article) => {
     const image = article.urlToImage ? article.urlToImage : noImage;
     return (
       <Card key={article.title} className={classes.card}>
@@ -43,8 +43,10 @@ const User = () => {
   });
 
   useEffect(() => {
-    // console.log("useEffect", listOfArticles);
-  }, [searchTerm, listOfArticles, dispatch]);
+    if (token) {
+      localStorage.setItem("jwtToken", token);
+    }
+  }, [token]);
 
   return (
     <div>

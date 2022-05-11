@@ -7,7 +7,7 @@ import { Button } from "react-bootstrap";
 const HeaderGreeting = () => {
   const authContext = useContext(AuthContext);
 
-  const isLoggedIn = useSelector((state) => state.auth.value);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
   const dispatch = useDispatch();
 

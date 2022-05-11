@@ -10,14 +10,18 @@ export const authSlice = createSlice({
   name: "auth",
   initialState,
   reducers: {
-    login: (state) => {
+    login: (state, action) => {
       state.isLoggedIn = true;
+      state.jwtToken = action.payload;
     },
     logout: (state) => {
       state.isLoggedIn = false;
       state.jwtToken = null;
     },
-    register: (state, action) => {},
+    register: (state, action) => {
+      state.isLoggedIn = true;
+      state.jwtToken = action.payload;
+    },
   },
 });
 
@@ -33,15 +37,21 @@ export const registerUser = (userInfo) => async (dispatch) => {
   );
 
   console.log("auth response", response);
-  //dispatch(register(userInfo))
+
+  const token = response.data.newUser;
+
+  dispatch(register(token));
 };
 
-// export const fetchArticles = (searchTerm) => async (dispatch) => {
-//   const response = await axios(
-//     `http://localhost:5000/api/articles/top-headlines/${searchTerm}`
-//   );
+export const loginUser = (userInfo) => async (dispatch) => {
+  const response = await axios.post(
+    "http://localhost:5000/api/user/login",
+    userInfo
+  );
 
-//   dispatch(searchArticles(response.data.articles));
-// };
+  const token = response.data;
+
+  dispatch(login(token));
+};
 
 export default authSlice.reducer;

@@ -1,14 +1,23 @@
+import { useState } from "react";
 import { useDispatch } from "react-redux";
-import { login } from "../../store/authSlice.js";
+import { loginUser } from "../../store/authSlice.js";
 import { Form } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
 
-const Login = ({ setEmail, setPassword, email, password }) => {
+const Login = () => {
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const dispatch = useDispatch();
 
   const loginHandler = (e) => {
     e.preventDefault();
-    dispatch(login());
+
+    const userInfo = {
+      email,
+      password,
+    };
+
+    dispatch(loginUser(userInfo));
   };
 
   const onEmailChange = (e) => {
@@ -28,7 +37,7 @@ const Login = ({ setEmail, setPassword, email, password }) => {
             name="username"
             value={email}
             onChange={onEmailChange}
-            placeholder="Username"
+            placeholder="Email"
           />
         </Form.Group>
         <Form.Group className="mb-3" controlId="passwordLogin">

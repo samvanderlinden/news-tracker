@@ -19,6 +19,8 @@ export default function App() {
 
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
 
+  console.log(isLoggedIn);
+
   const registerHandler = (e) => {
     e.preventDefault();
     setRegisterEmail("");
@@ -60,8 +62,6 @@ export default function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <h1>Learn React</h1>
 
       <Routes>
         <Route

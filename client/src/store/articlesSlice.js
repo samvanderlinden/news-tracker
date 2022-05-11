@@ -23,8 +23,15 @@ export const { searchArticles, resetArticles } = articlesSlice.actions;
 
 // Define a thunk that dispatches those action creators
 export const fetchArticles = (searchTerm) => async (dispatch) => {
+  const authToken = localStorage.getItem("jwtToken");
+
   const response = await axios(
-    `http://localhost:5000/api/articles/top-headlines/${searchTerm}`
+    `http://localhost:5000/api/articles/top-headlines/${searchTerm}`,
+    {
+      headers: {
+        "auth-token": authToken,
+      },
+    }
   );
 
   dispatch(searchArticles(response.data.articles));

@@ -14,6 +14,7 @@ const User = () => {
   };
 
   const articlesList = useSelector((state) => state.articles.articles);
+
   const token = useSelector((state) => state.auth.jwtToken);
 
   const onSearchSubmit = (e) => {
@@ -26,7 +27,7 @@ const User = () => {
     setSearchTerm("");
   };
 
-  const uniqueArticles = [...new Set(articlesList)];
+  const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
 
   const mappedArticlesList = uniqueArticles.map((article) => {
     const image = article.urlToImage ? article.urlToImage : noImage;

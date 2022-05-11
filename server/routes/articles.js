@@ -48,7 +48,7 @@ route.get("/", verify, async (req, res) => {
 });
 
 //GET ARTICLES FROM TOP HEADLINES
-route.get("/top-headlines/:searchTerm", async (req, res) => {
+route.get("/top-headlines/:searchTerm", verify, async (req, res) => {
   const { searchTerm } = req.params;
 
   try {

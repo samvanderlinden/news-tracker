@@ -7,6 +7,15 @@ const app = express();
 const mongoose = require("mongoose");
 const PORT = 5000;
 
+//IMPORT CORS
+const cors = require("cors");
+
+const corsOptions = {
+  origin: "*",
+  credentials: true,
+  optionSuccessStatus: 200,
+};
+
 //CONNECT TO MONGO DB
 mongoose.connect(
   process.env.MONGO_URI,
@@ -18,11 +27,7 @@ mongoose.connect(
 
 //MIDDLEWARES
 app.use(express.json());
-
-app.use((req, res, next) => {
-  res.header("Access-Control-Allow-Origin", "*");
-  next();
-});
+app.use(cors(corsOptions));
 
 //IMPORT ROUTES
 const authRoute = require("./routes/auth");

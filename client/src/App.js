@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Login from "./components/Login/Login";
@@ -17,7 +17,8 @@ export default function App() {
   const [registerPassword, setRegisterPassword] = useState("");
   const [registerUsername, setRegisterUsername] = useState("");
 
-  const isLoggedIn = useSelector((state) => state.auth.value);
+  const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
+  const token = useSelector((state) => state.auth.jwtToken);
 
   const registerHandler = (e) => {
     e.preventDefault();
@@ -25,6 +26,12 @@ export default function App() {
     setRegisterPassword("");
     setRegisterUsername("");
   };
+
+  useEffect(() => {
+    if (!token) {
+      localStorage.removeItem("jwtToken");
+    }
+  });
 
   return (
     <AuthContext.Provider
@@ -60,8 +67,6 @@ export default function App() {
           </Navbar.Collapse>
         </Container>
       </Navbar>
-
-      <h1>Learn React</h1>
 
       <Routes>
         <Route

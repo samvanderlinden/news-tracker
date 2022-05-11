@@ -16,3 +16,5 @@
 - [x] Transition state management to Redux
 - [x] Transition React Router to v6
 - [x] Use thunks to dispatch GET top-headlines articles
+- [x] Register user
+- [x] Login user

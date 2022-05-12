@@ -9,8 +9,6 @@ const { registerValidation, loginValidation } = require("../validation");
 route.post("/register", async (req, res) => {
   const { name, password, email } = req.body;
 
-  console.log(req.body);
-
   try {
     //VALIDATION CHECK
     const { error } = registerValidation(req.body);

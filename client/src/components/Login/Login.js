@@ -26,10 +26,8 @@ const Login = () => {
   const loginHandler = (e) => {
     e.preventDefault();
 
-    console.log(formIsValid);
-
     if (!formIsValid) {
-      return; //Do not submit form if email input is invalid
+      return; //Do not submit form if email or password are invalid
     }
 
     const userInfo = {
@@ -78,7 +76,9 @@ const Login = () => {
             className={emailInputClasses}
           />
           {emailInputIsInvalid && (
-            <p className={classes.message}>Email is invalid</p>
+            <p className={classes.message}>
+              Email must be a valid email address
+            </p>
           )}
         </Form.Group>
         <Form.Group className="mb-3" controlId="passwordLogin">
@@ -92,7 +92,9 @@ const Login = () => {
             className={passwordInputClasses}
           />
           {passwordInputIsInvalid && (
-            <p className={classes.message}>Password is invalid</p>
+            <p className={classes.message}>
+              Password must be at least 6 characters
+            </p>
           )}
         </Form.Group>
       </AuthCard>

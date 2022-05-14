@@ -8,7 +8,7 @@
 - [x] Create verify token routes
 - [x] Get news api key
 - [x] Create server GET request for user to get top-headline articles
-- [ ] Finish error handling in server side routes
+- [x] Finish error handling in server side routes
 
 ## Client checklist
 

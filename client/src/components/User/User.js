@@ -4,6 +4,7 @@ import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 import { fetchArticles } from "../../store/articlesSlice";
+import { addArticle } from "../../store/userSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
@@ -27,6 +28,11 @@ const User = () => {
     setSearchTerm("");
   };
 
+  const onAddToFavorites = (article) => {
+    // console.log(article);
+    dispatch(addArticle(article));
+  };
+
   const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
 
   const mappedArticlesList = uniqueArticles.map((article) => {
@@ -37,7 +43,12 @@ const User = () => {
         <Card.Body>
           <Card.Title>{article.title}</Card.Title>
           <Card.Text>{article.description}</Card.Text>
-          <Button variant="outline-primary">Add to Favorites</Button>
+          <Button
+            variant="outline-primary"
+            onClick={() => onAddToFavorites(article)}
+          >
+            Add to Favorites
+          </Button>
         </Card.Body>
       </Card>
     );
@@ -51,7 +62,6 @@ const User = () => {
 
   return (
     <div>
-      <h3>User component</h3>
       <Form onSubmit={onSearchSubmit}>
         <Form.Group className="mb-3" controlId="articleSearch">
           <Col sm="6">

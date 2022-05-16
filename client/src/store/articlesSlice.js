@@ -25,16 +25,20 @@ export const { searchArticles, resetArticles } = articlesSlice.actions;
 export const fetchArticles = (searchTerm) => async (dispatch) => {
   const authToken = localStorage.getItem("jwtToken");
 
-  const response = await axios(
-    `http://localhost:5000/api/articles/top-headlines/${searchTerm}`,
-    {
-      headers: {
-        "auth-token": authToken,
-      },
-    }
-  );
+  try {
+    const response = await axios(
+      `http://localhost:5000/api/articles/top-headlines/${searchTerm}`,
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
 
-  dispatch(searchArticles(response.data.articles));
+    dispatch(searchArticles(response.data.articles));
+  } catch (error) {
+    console.log(error);
+  }
 };
 
 export default articlesSlice.reducer;

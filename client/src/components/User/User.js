@@ -8,6 +8,7 @@ import { addArticle } from "../../store/userSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const dispatch = useDispatch();
 
   const onSearchChange = (e) => {
@@ -23,15 +24,27 @@ const User = () => {
 
     setSearchTerm(e.target.value);
 
+    // if (
+    //   searchTerm === "" ||
+    //   searchTerm === " " ||
+    //   searchTerm === null ||
+    //   searchTerm === undefined
+    // ) {
+    //   return;
+    // }
+
+    setFormSubmitted(true);
+
     dispatch(fetchArticles(searchTerm));
 
     setSearchTerm("");
   };
 
   const onAddToFavorites = (article) => {
-    // console.log(article);
     dispatch(addArticle(article));
   };
+
+  console.log(articlesList);
 
   const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
 
@@ -82,6 +95,9 @@ const User = () => {
           {mappedArticlesList}
         </Row>
       </CardGroup>
+      {/* {formSubmitted && !mappedArticlesList && (
+        <p>There are no articles to view at this time</p>
+      )} */}
     </div>
   );
 };

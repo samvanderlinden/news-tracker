@@ -8,7 +8,7 @@ import { addArticle } from "../../store/userSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
-  const [formSubmitted, setFormSubmitted] = useState(false);
+  const [formIsSubmitted, setFormIsSubmitted] = useState(false);
   const dispatch = useDispatch();
 
   const onSearchChange = (e) => {
@@ -24,16 +24,16 @@ const User = () => {
 
     setSearchTerm(e.target.value);
 
+    setFormIsSubmitted(true);
+
     // if (
-    //   searchTerm === "" ||
-    //   searchTerm === " " ||
-    //   searchTerm === null ||
-    //   searchTerm === undefined
+    //   e.target.value === "" ||
+    //   e.target.value === " " ||
+    //   e.target.value === null ||
+    //   e.target.value === undefined
     // ) {
     //   return;
     // }
-
-    setFormSubmitted(true);
 
     dispatch(fetchArticles(searchTerm));
 
@@ -44,11 +44,7 @@ const User = () => {
     dispatch(addArticle(article));
   };
 
-  // console.log(articlesList);
-
-  const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
-
-  const mappedArticlesList = uniqueArticles.map((article) => {
+  const mappedArticlesList = articlesList.map((article) => {
     const image = article.urlToImage ? article.urlToImage : noImage;
     return (
       <Card key={article.title} className={classes.card}>
@@ -95,8 +91,8 @@ const User = () => {
           {mappedArticlesList}
         </Row>
       </CardGroup>
-      {/* {formSubmitted && !mappedArticlesList && (
-        <p>There are no articles to view at this time</p>
+      {/* {formIsSubmitted && articlesList.length === 0 && (
+        <p>No articles found with your search criteria</p>
       )} */}
     </div>
   );

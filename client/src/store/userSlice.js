@@ -10,7 +10,7 @@ export const favoriteArticles = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      state.favoriteArticles = state.favoriteArticles.push(action.payload);
+      state.favoriteArticles.push(action.payload);
     },
     getFavorites: (state, action) => {
       state.favoriteArticles = action.payload;
@@ -51,8 +51,6 @@ export const getFavoriteArticles = () => async (dispatch) => {
         "auth-token": authToken,
       },
     });
-
-    console.log(response.data);
 
     dispatch(getFavorites(response.data));
   } catch (error) {

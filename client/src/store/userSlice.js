@@ -40,12 +40,15 @@ export const addArticle = (article) => async (dispatch) => {
       }
     );
 
-    console.log("response", response);
+    if (
+      response.data.message !==
+      "This article has already been saved to your favorites"
+    ) {
+      dispatch(addToFavorites(articleInfoToSave));
+    }
   } catch (err) {
     console.log(err);
   }
-
-  dispatch(addToFavorites(articleInfoToSave));
 };
 
 export const getFavoriteArticles = () => async (dispatch) => {

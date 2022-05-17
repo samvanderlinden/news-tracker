@@ -1,14 +1,12 @@
 import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CardGroup, Row, Card } from "react-bootstrap";
+import { CardGroup, Row, Card, Button } from "react-bootstrap";
 import { getFavoriteArticles } from "../../store/userSlice";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 
 const Favorites = () => {
   const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
-
-  console.log(favoriteArticles);
 
   const dispatch = useDispatch();
 
@@ -31,12 +29,7 @@ const Favorites = () => {
           <Card.Body>
             <Card.Title>{article.title}</Card.Title>
             <Card.Text>{article.description}</Card.Text>
-            {/* <Button
-              variant="outline-primary"
-              onClick={() => onAddToFavorites(article)}
-            >
-              Add to Favorites
-            </Button> */}
+            <Button variant="outline-danger">Delete from Favorites</Button>
           </Card.Body>
         </Card>
       );

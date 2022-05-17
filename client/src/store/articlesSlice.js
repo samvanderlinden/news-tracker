@@ -35,7 +35,20 @@ export const fetchArticles = (searchTerm) => async (dispatch) => {
       }
     );
 
-    dispatch(searchArticles(response.data.articles));
+    let uniqueArticles = [];
+
+    //Filtering out articles by article title
+    if (response.data.articles.length > 0) {
+      const uniqueTitles = response.data.articles.map(
+        (article) => article.title
+      );
+
+      uniqueArticles = response.data.articles.filter(
+        (article, index) => !uniqueTitles.includes(article.title, index + 1)
+      );
+    }
+
+    dispatch(searchArticles(uniqueArticles));
   } catch (error) {
     console.log(error);
   }

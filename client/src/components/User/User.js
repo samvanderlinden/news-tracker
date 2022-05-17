@@ -44,7 +44,7 @@ const User = () => {
     dispatch(addArticle(article));
   };
 
-  console.log(articlesList);
+  // console.log(articlesList);
 
   const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
 

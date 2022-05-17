@@ -18,4 +18,4 @@
 - [x] Use thunks to dispatch GET top-headlines articles
 - [x] Register user
 - [x] Login user
-- [ ] User adds article to their favorites
+- [x] User adds article to their favorites

@@ -4,9 +4,11 @@ import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 import { fetchArticles } from "../../store/articlesSlice";
+import { addArticle } from "../../store/userSlice";
 
 const User = () => {
   const [searchTerm, setSearchTerm] = useState("");
+  const [formIsSubmitted, setFormIsSubmitted] = useState(false);
   const dispatch = useDispatch();
 
   const onSearchChange = (e) => {
@@ -22,14 +24,27 @@ const User = () => {
 
     setSearchTerm(e.target.value);
 
+    setFormIsSubmitted(true);
+
+    // if (
+    //   e.target.value === "" ||
+    //   e.target.value === " " ||
+    //   e.target.value === null ||
+    //   e.target.value === undefined
+    // ) {
+    //   return;
+    // }
+
     dispatch(fetchArticles(searchTerm));
 
     setSearchTerm("");
   };
 
-  const uniqueArticles = [...new Set(articlesList)]; //Removes duplicate articles
+  const onAddToFavorites = (article) => {
+    dispatch(addArticle(article));
+  };
 
-  const mappedArticlesList = uniqueArticles.map((article) => {
+  const mappedArticlesList = articlesList.map((article) => {
     const image = article.urlToImage ? article.urlToImage : noImage;
     return (
       <Card key={article.title} className={classes.card}>
@@ -37,7 +52,12 @@ const User = () => {
         <Card.Body>
           <Card.Title>{article.title}</Card.Title>
           <Card.Text>{article.description}</Card.Text>
-          <Button variant="outline-primary">Add to Favorites</Button>
+          <Button
+            variant="outline-primary"
+            onClick={() => onAddToFavorites(article)}
+          >
+            Add to Favorites
+          </Button>
         </Card.Body>
       </Card>
     );
@@ -51,7 +71,6 @@ const User = () => {
 
   return (
     <div>
-      <h3>User component</h3>
       <Form onSubmit={onSearchSubmit}>
         <Form.Group className="mb-3" controlId="articleSearch">
           <Col sm="6">
@@ -72,6 +91,9 @@ const User = () => {
           {mappedArticlesList}
         </Row>
       </CardGroup>
+      {/* {formIsSubmitted && articlesList.length === 0 && (
+        <p>No articles found with your search criteria</p>
+      )} */}
     </div>
   );
 };

@@ -6,17 +6,15 @@ import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 
 const Favorites = () => {
-  const favoriteArticles = useSelector((state) => {
-    console.log(state);
-    return state.user.favoriteArticles;
-  });
-  console.log("favoriteArticles", favoriteArticles);
+  const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
+
+  console.log(favoriteArticles);
 
   const dispatch = useDispatch();
 
   useEffect(() => {
     dispatch(getFavoriteArticles());
-  }, [favoriteArticles, dispatch]);
+  }, [dispatch]);
 
   let listOfFavoriteArticles;
 

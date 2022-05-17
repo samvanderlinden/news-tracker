@@ -20,16 +20,28 @@ route.post("/", verify, async (req, res) => {
       savedBy: req.user._id,
     });
 
-    await Article.create(article);
+    // await Article.create(article);
 
     const user = await User.findById(req.user._id).exec();
 
     if (user) {
-      user.articles.push(article);
+      const articleIndex = user.articles.findIndex(
+        (articleToSave) => article.title === articleToSave.title
+      );
 
-      user.save();
+      if (articleIndex < 0) {
+        await Article.create(article);
 
-      res.json({ message: "Article saved!" });
+        user.articles.push(article);
+
+        user.save();
+
+        res.json({ message: "Article saved!" });
+      } else {
+        res.json({
+          message: "This article has already been saved to your favorites",
+        });
+      }
     }
   } catch (error) {
     res.status(400).send(error);

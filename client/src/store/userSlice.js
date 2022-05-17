@@ -30,11 +30,17 @@ export const addArticle = (article) => async (dispatch) => {
   };
 
   try {
-    await axios.post(`http://localhost:5000/api/articles`, articleInfoToSave, {
-      headers: {
-        "auth-token": authToken,
-      },
-    });
+    const response = await axios.post(
+      `http://localhost:5000/api/articles`,
+      articleInfoToSave,
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
+
+    console.log("response", response);
   } catch (err) {
     console.log(err);
   }

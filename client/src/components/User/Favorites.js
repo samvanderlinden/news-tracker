@@ -2,6 +2,7 @@ import { useEffect } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CardGroup, Row, Card, Button } from "react-bootstrap";
 import { getFavoriteArticles } from "../../store/userSlice";
+import { deleteArticle } from "../../store/userSlice";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 
@@ -10,9 +11,13 @@ const Favorites = () => {
 
   const dispatch = useDispatch();
 
+  const onDeleteArticle = (article) => {
+    dispatch(deleteArticle(article._id));
+  };
+
   useEffect(() => {
     dispatch(getFavoriteArticles());
-  }, [dispatch]);
+  }, [dispatch, favoriteArticles]);
 
   let listOfFavoriteArticles;
 
@@ -29,7 +34,12 @@ const Favorites = () => {
           <Card.Body>
             <Card.Title>{article.title}</Card.Title>
             <Card.Text>{article.description}</Card.Text>
-            <Button variant="outline-danger">Delete from Favorites</Button>
+            <Button
+              variant="outline-danger"
+              onClick={() => onDeleteArticle(article)}
+            >
+              Delete from Favorites
+            </Button>
           </Card.Body>
         </Card>
       );

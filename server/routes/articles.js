@@ -8,7 +8,7 @@ const { JsonWebTokenError } = require("jsonwebtoken");
 
 //ADD ARTICLE TO COLLECTION IF USER IS LOGGED IN
 route.post("/", verify, async (req, res) => {
-  const { source, author, description, content, title } = req.body;
+  const { source, author, description, content, title, urlToImage } = req.body;
 
   try {
     const article = new Article({
@@ -17,10 +17,9 @@ route.post("/", verify, async (req, res) => {
       content,
       description,
       title,
+      urlToImage,
       savedBy: req.user._id,
     });
-
-    // await Article.create(article);
 
     const user = await User.findById(req.user._id).exec();
 
@@ -89,11 +88,13 @@ route.delete("/:articleId", verify, async (req, res) => {
       (article) => article._id.toString() !== req.params.articleId
     );
 
-    user.posts = filteredArticles;
+    user.articles = filteredArticles;
 
     await user.save();
 
-    if (deletedArticle) res.status(200).json({ message: "article deleted" });
+    if (deletedArticle) {
+      res.json(deletedArticle);
+    }
   } catch (error) {
     res.status(400).json({ message: error });
   }

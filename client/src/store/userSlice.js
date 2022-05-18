@@ -15,6 +15,11 @@ export const favoriteArticles = createSlice({
     getFavorites: (state, action) => {
       state.favoriteArticles = action.payload;
     },
+    deleteFavorite: (state, action) => {
+      state.favoriteArticles.filter((article) => {
+        return article._id !== action.payload;
+      });
+    },
   },
 });
 
@@ -27,6 +32,7 @@ export const addArticle = (article) => async (dispatch) => {
     title: article.title,
     description: article.description,
     content: article.content,
+    urlToImage: article.urlToImage,
   };
 
   try {
@@ -67,6 +73,28 @@ export const getFavoriteArticles = () => async (dispatch) => {
   }
 };
 
-export const { addToFavorites, getFavorites } = favoriteArticles.actions;
+export const deleteArticle = (id) => async (dispatch) => {
+  const authToken = localStorage.getItem("jwtToken");
+
+  const articleId = id;
+
+  try {
+    const response = await axios.delete(
+      `http://localhost:5000/api/articles/${articleId}`,
+      {
+        headers: {
+          "auth-token": authToken,
+        },
+      }
+    );
+
+    dispatch(deleteFavorite(response.data._id));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const { addToFavorites, getFavorites, deleteFavorite } =
+  favoriteArticles.actions;
 
 export default favoriteArticles.reducer;

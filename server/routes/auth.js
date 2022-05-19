@@ -18,7 +18,9 @@ route.post("/register", async (req, res) => {
     //CHECK IF EMAIL ALREADY EXISTS
     const emailExists = await User.findOne({ email: email }).exec();
 
-    if (emailExists) return res.status(400).send("User already exists");
+    if (emailExists) {
+      throw "Email already exists. Please register with a unique email.";
+    }
 
     //HASH PASSWORD
     const salt = await bcrypt.genSalt(10);
@@ -35,7 +37,7 @@ route.post("/register", async (req, res) => {
 
     res.status(200).send({ newUser: newUser._id });
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).json({ error });
   }
 });
 

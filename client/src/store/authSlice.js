@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   isLoggedIn: false,
   jwtToken: null,
+  errorMessage: null,
 };
 
 export const authSlice = createSlice({
@@ -19,8 +20,12 @@ export const authSlice = createSlice({
       state.jwtToken = null;
     },
     register: (state, action) => {
-      state.isLoggedIn = true;
-      state.jwtToken = action.payload;
+      if (!action.payload.errorMessage) {
+        state.isLoggedIn = true;
+        state.jwtToken = action.payload.jwtToken;
+      } else {
+        state.errorMessage = action.payload.errorMessage;
+      }
     },
   },
 });
@@ -29,18 +34,18 @@ export const authSlice = createSlice({
 export const { login, logout, register } = authSlice.actions;
 
 export const registerUser = (userInfo) => async (dispatch) => {
-  console.log("userInfo", userInfo);
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/user/register",
+      userInfo
+    );
 
-  const response = await axios.post(
-    "http://localhost:5000/api/user/register",
-    userInfo
-  );
+    const token = response.data.newUser;
 
-  console.log("auth response", response);
-
-  const token = response.data.newUser;
-
-  dispatch(register(token));
+    dispatch(register({ token: token, errorMessage: null }));
+  } catch (err) {
+    dispatch(register({ token: null, errorMessage: err.response.data.error }));
+  }
 };
 
 export const loginUser = (userInfo) => async (dispatch) => {

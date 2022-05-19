@@ -1,4 +1,4 @@
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { useState, useEffect } from "react";
 import { Form } from "react-bootstrap";
 import { registerUser } from "../../store/authSlice";
@@ -13,8 +13,10 @@ const Register = () => {
   const [emailWasTouched, setEmailWasTouched] = useState(false);
   const [passwordWastouched, setPasswordWasTouched] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
 
   const dispatch = useDispatch();
+  const registerErrorMessage = useSelector((state) => state.auth.errorMessage);
 
   const emailValidationRegex =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -55,6 +57,8 @@ const Register = () => {
     };
 
     dispatch(registerUser(userInfo));
+
+    setFormSubmitted(true);
   };
 
   const onNameBlur = (e) => {
@@ -126,6 +130,7 @@ const Register = () => {
             </p>
           )}
         </Form.Group>
+        {registerErrorMessage && formSubmitted && <p>{registerErrorMessage}</p>}
       </AuthCard>
     </>
   );

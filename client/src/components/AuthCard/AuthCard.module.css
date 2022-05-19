@@ -3,6 +3,8 @@
   justify-content: center;
   align-items: center;
   padding-top: 50px;
+  animation-duration: 1s;
+  animation-name: fadein;
 }
 
 .card {
@@ -50,4 +52,14 @@
 .text-link:hover {
   color: white;
   font-weight: bold;
+}
+
+@keyframes fadein {
+  from {
+    opacity: 0;
+  }
+
+  to {
+    opacity: 1;
+  }
 }

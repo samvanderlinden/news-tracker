@@ -44,7 +44,6 @@ export const registerUser = (userInfo) => async (dispatch) => {
 
     dispatch(register({ token: token, errorMessage: null }));
   } catch (err) {
-    console.log(err.response.data.error);
     dispatch(register({ token: null, errorMessage: err.response.data.error }));
   }
 };

@@ -12,8 +12,12 @@ export const authSlice = createSlice({
   initialState,
   reducers: {
     login: (state, action) => {
-      state.isLoggedIn = true;
-      state.jwtToken = action.payload;
+      if (!action.payload.errorMessage) {
+        state.isLoggedIn = true;
+        state.jwtToken = action.payload.jwtToken;
+      } else {
+        state.errorMessage = action.payload.errorMessage;
+      }
     },
     logout: (state) => {
       state.isLoggedIn = false;
@@ -42,21 +46,27 @@ export const registerUser = (userInfo) => async (dispatch) => {
 
     const token = response.data.newUser;
 
-    dispatch(register({ token: token, errorMessage: null }));
+    dispatch(register({ jwtToken: token, errorMessage: null }));
   } catch (err) {
-    dispatch(register({ token: null, errorMessage: err.response.data.error }));
+    dispatch(
+      register({ jwtToken: null, errorMessage: err.response.data.error })
+    );
   }
 };
 
 export const loginUser = (userInfo) => async (dispatch) => {
-  const response = await axios.post(
-    "http://localhost:5000/api/user/login",
-    userInfo
-  );
+  try {
+    const response = await axios.post(
+      "http://localhost:5000/api/user/login",
+      userInfo
+    );
 
-  const token = response.data;
+    const token = response.data;
 
-  dispatch(login(token));
+    dispatch(login({ jwtToken: token, errorMessage: null }));
+  } catch (err) {
+    dispatch(login({ jwtToken: null, errorMessage: err.response.data.error }));
+  }
 };
 
 export default authSlice.reducer;

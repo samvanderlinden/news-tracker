@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser } from "../../store/authSlice.js";
 import { Form } from "react-bootstrap";
 import AuthCard from "../AuthCard/AuthCard";
@@ -11,7 +11,10 @@ const Login = () => {
   const [emailWasTouched, setEmailWasTouched] = useState(false);
   const [passwordWasTouched, setPasswordWasTouched] = useState(false);
   const [formIsValid, setFormIsValid] = useState(false);
+  const [formSubmitted, setFormSubmitted] = useState(false);
+
   const dispatch = useDispatch();
+  const loginErrorMessage = useSelector((state) => state.auth.errorMessage);
 
   const emailValidationRegex =
     /^(([^<>()[\].,;:\s@"]+(\.[^<>()[\].,;:\s@"]+)*)|(".+"))@(([^<>()[\].,;:\s@"]+\.)+[^<>()[\].,;:\s@"]{2,})$/i;
@@ -38,6 +41,8 @@ const Login = () => {
     dispatch(loginUser(userInfo));
 
     setEmailWasTouched(false);
+
+    setFormSubmitted(true);
   };
 
   const onEmailChange = (e) => {
@@ -97,6 +102,9 @@ const Login = () => {
             </p>
           )}
         </Form.Group>
+        {loginErrorMessage && formSubmitted && (
+          <p className={classes.message}>{loginErrorMessage}</p>
+        )}
       </AuthCard>
     </>
   );

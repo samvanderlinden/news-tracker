@@ -37,7 +37,7 @@ route.post("/register", async (req, res) => {
 
     res.status(200).send({ newUser: newUser._id });
   } catch (error) {
-    res.status(400).json({ error });
+    res.status(400).send({ error });
   }
 });
 
@@ -49,16 +49,18 @@ route.post("/login", async (req, res) => {
     //VALIDATION CHECK
     const { error } = loginValidation(req.body);
 
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      throw error.details[0].message;
+    }
 
     //CHECK IF EMAIL EXISTS
     const user = await User.findOne({ email: email }).exec();
 
-    if (!user) return res.status(400).send("User email does not exist");
+    if (!user) throw "User email does not exist";
 
     const comparePassword = await bcrypt.compare(password, user.password);
 
-    if (!comparePassword) return res.status(400).send("Passwords don't match");
+    if (!comparePassword) throw "Passwords don't match";
 
     //GENERATE TOKEN
     const token = jwt.sign(
@@ -68,7 +70,7 @@ route.post("/login", async (req, res) => {
 
     res.header("auth-token", token).send(token);
   } catch (error) {
-    res.status(400).send(error.message);
+    res.status(400).send({ error });
   }
 });
 

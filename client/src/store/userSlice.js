@@ -3,6 +3,7 @@ import axios from "axios";
 
 const initialState = {
   favoriteArticles: [],
+  errorMessage: null,
 };
 
 export const favoriteArticles = createSlice({
@@ -10,13 +11,18 @@ export const favoriteArticles = createSlice({
   initialState,
   reducers: {
     addToFavorites: (state, action) => {
-      state.favoriteArticles.push(action.payload);
+      if (!action.payload.errorMessage) {
+        state.favoriteArticles.push(action.payload.article);
+        state.errorMessage = null;
+      } else {
+        state.errorMessage = action.payload.errorMessage;
+      }
     },
     getFavorites: (state, action) => {
       state.favoriteArticles = action.payload;
     },
     deleteFavorite: (state, action) => {
-      state.favoriteArticles.filter((article) => {
+      state.favoriteArticles = state.favoriteArticles.filter((article) => {
         return article._id !== action.payload;
       });
     },
@@ -36,24 +42,23 @@ export const addArticle = (article) => async (dispatch) => {
   };
 
   try {
-    const response = await axios.post(
-      `http://localhost:5000/api/articles`,
-      articleInfoToSave,
-      {
-        headers: {
-          "auth-token": authToken,
-        },
-      }
-    );
+    await axios.post(`http://localhost:5000/api/articles`, articleInfoToSave, {
+      headers: {
+        "auth-token": authToken,
+      },
+    });
 
-    if (
-      response.data.message !==
-      "This article has already been saved to your favorites"
-    ) {
-      dispatch(addToFavorites(articleInfoToSave));
-    }
+    dispatch(
+      addToFavorites({ article: articleInfoToSave, errorMessage: null })
+    );
   } catch (err) {
     console.log(err);
+    dispatch(
+      addToFavorites({
+        article: articleInfoToSave,
+        errorMessage: err.response.data.error,
+      })
+    );
   }
 };
 
@@ -89,6 +94,18 @@ export const deleteArticle = (id) => async (dispatch) => {
     );
 
     dispatch(deleteFavorite(response.data._id));
+
+    try {
+      const response = await axios(`http://localhost:5000/api/articles`, {
+        headers: {
+          "auth-token": authToken,
+        },
+      });
+
+      dispatch(getFavorites(response.data));
+    } catch (error) {
+      console.log(error);
+    }
   } catch (error) {
     console.log(error);
   }

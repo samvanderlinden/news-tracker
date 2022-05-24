@@ -130,7 +130,9 @@ const Register = () => {
             </p>
           )}
         </Form.Group>
-        {registerErrorMessage && formSubmitted && <p>{registerErrorMessage}</p>}
+        {registerErrorMessage && formSubmitted && (
+          <p className={classes.message}>{registerErrorMessage}</p>
+        )}
       </AuthCard>
     </>
   );

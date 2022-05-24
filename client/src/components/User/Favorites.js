@@ -1,4 +1,4 @@
-import { useEffect } from "react";
+import { useEffect, useRef } from "react";
 import { useSelector, useDispatch } from "react-redux";
 import { CardGroup, Row, Card, Button } from "react-bootstrap";
 import { getFavoriteArticles } from "../../store/userSlice";
@@ -8,6 +8,8 @@ import classes from "./UserCard.module.css";
 
 const Favorites = () => {
   const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
+  //const { current: favoriteArticlesArray } = useRef(favoriteArticles);
+  console.log("favorite articles", favoriteArticles);
 
   const dispatch = useDispatch();
 
@@ -17,7 +19,7 @@ const Favorites = () => {
 
   useEffect(() => {
     dispatch(getFavoriteArticles());
-  }, [dispatch, favoriteArticles]);
+  }, [dispatch]);
 
   let listOfFavoriteArticles;
 

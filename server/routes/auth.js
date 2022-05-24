@@ -13,7 +13,9 @@ route.post("/register", async (req, res) => {
     //VALIDATION CHECK
     const { error } = registerValidation(req.body);
 
-    if (error) return res.status(400).send(error.details[0].message);
+    if (error) {
+      throw error.details[0].message;
+    }
 
     //CHECK IF EMAIL ALREADY EXISTS
     const emailExists = await User.findOne({ email: email }).exec();

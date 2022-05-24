@@ -37,13 +37,14 @@ route.post("/", verify, async (req, res) => {
 
         res.json({ message: "Article saved!" });
       } else {
-        res.json({
-          message: "This article has already been saved to your favorites",
-        });
+        // res.json({
+        //   message: "This article has already been saved to your favorites",
+        // });
+        throw "This article has already been saved to your favorites";
       }
     }
   } catch (error) {
-    res.status(400).send(error);
+    res.status(400).send({ error });
   }
 });
 

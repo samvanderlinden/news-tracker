@@ -12,8 +12,6 @@ import classes from "./App.module.css";
 export default function App() {
   const isLoggedIn = useSelector((state) => state.auth.isLoggedIn);
   const token = useSelector((state) => state.auth.jwtToken);
-  //const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
-  console.log("in APP");
 
   useEffect(() => {
     if (!token) {

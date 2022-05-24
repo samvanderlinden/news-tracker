@@ -91,9 +91,9 @@ const User = () => {
           {mappedArticlesList}
         </Row>
       </CardGroup>
-      {/* {formIsSubmitted && articlesList.length === 0 && (
+      {formIsSubmitted && articlesList && articlesList.length === 0 && (
         <p>No articles found with your search criteria</p>
-      )} */}
+      )}
     </div>
   );
 };

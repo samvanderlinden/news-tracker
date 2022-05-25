@@ -20,6 +20,7 @@
     "react-scripts": "4.0.3",
     "redux": "^4.1.2",
     "redux-logger": "^3.0.6",
+    "sweetalert2": "^11.4.17",
     "web-vitals": "^1.1.2"
   },
   "scripts": {

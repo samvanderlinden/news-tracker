@@ -4,6 +4,7 @@ import axios from "axios";
 const initialState = {
   favoriteArticles: [],
   errorMessage: null,
+  articleAdded: null,
 };
 
 export const favoriteArticles = createSlice({
@@ -14,17 +15,21 @@ export const favoriteArticles = createSlice({
       if (!action.payload.errorMessage) {
         state.favoriteArticles.push(action.payload.article);
         state.errorMessage = null;
+        state.articleAdded = true;
       } else {
         state.errorMessage = action.payload.errorMessage;
+        state.articleAdded = false;
       }
     },
     getFavorites: (state, action) => {
       state.favoriteArticles = action.payload;
+      state.articleAdded = null;
     },
     deleteFavorite: (state, action) => {
       state.favoriteArticles = state.favoriteArticles.filter((article) => {
         return article._id !== action.payload;
       });
+      state.articleAdded = null;
     },
   },
 });
@@ -52,7 +57,6 @@ export const addArticle = (article) => async (dispatch) => {
       addToFavorites({ article: articleInfoToSave, errorMessage: null })
     );
   } catch (err) {
-    console.log(err);
     dispatch(
       addToFavorites({
         article: articleInfoToSave,

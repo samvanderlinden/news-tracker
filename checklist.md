@@ -20,4 +20,5 @@
 - [x] Login user
 - [x] User adds article to their favorites
 - [ ] Improve client side error handling
-- [ ] Give UI feedback when user saves article, and when user tries saving article that is already saved
+- [x] Give UI feedback when user saves article, and when user tries saving article that is already saved
+- [ ] Change background, edit card spacing and formatting

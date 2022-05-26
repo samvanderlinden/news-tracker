@@ -8,3 +8,18 @@
   width: 100%;
   height: auto
 }
+
+.searchInput {
+  width: 50%;
+  min-width: 300px;
+  margin-top: 10%;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+.searchButton {
+  width: 50%;
+  min-width: 300px;
+  margin: 10px auto;
+  display: table
+}

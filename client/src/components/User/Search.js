@@ -1,13 +1,13 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
+import { Row, Card, CardGroup, Form, Button } from "react-bootstrap";
 import Swal from "sweetalert2";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 import { fetchArticles } from "../../store/articlesSlice";
 import { addArticle } from "../../store/userSlice";
 
-const User = () => {
+const Search = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const [formIsSubmitted, setFormIsSubmitted] = useState(false);
   const dispatch = useDispatch();
@@ -96,19 +96,24 @@ const User = () => {
   return (
     <div>
       <Form onSubmit={onSearchSubmit}>
-        <Form.Group className="mb-3" controlId="articleSearch">
-          <Col sm="6">
-            <Form.Control
-              type="text"
-              value={searchTerm}
-              onChange={onSearchChange}
-              placeholder="Search for articles"
-            />
-          </Col>
+        <Form.Group controlId="articleSearch">
+          <Form.Control
+            type="text"
+            value={searchTerm}
+            onChange={onSearchChange}
+            placeholder="Search for articles"
+            className={classes.searchInput}
+          />
         </Form.Group>
-        <Button variant="primary" type="submit">
+        {/* <div> */}
+        <Button
+          variant="primary"
+          type="submit"
+          className={classes.searchButton}
+        >
           Search
         </Button>
+        {/* </div> */}
       </Form>
       <CardGroup>
         <Row xs={1} sm={2} md={3}>
@@ -122,4 +127,4 @@ const User = () => {
   );
 };
 
-export default User;
+export default Search;

@@ -2,7 +2,7 @@ import { useEffect } from "react";
 import { useSelector } from "react-redux";
 import { Navbar, Nav, Container } from "react-bootstrap";
 import Login from "./components/Login/Login";
-import User from "./components/User/User";
+import Search from "./components/User/Search";
 import HeaderGreeting from "./components/Header/HeaderGreeting";
 import { Routes, Route, Navigate, Link } from "react-router-dom";
 import Favorites from "./components/User/Favorites";
@@ -45,25 +45,27 @@ export default function App() {
         </Container>
       </Navbar>
 
-      <Routes>
-        <Route
-          path="/search"
-          element={!isLoggedIn ? <Navigate to="/" /> : <User />}
-        />
-        <Route
-          path="/favorites"
-          element={!isLoggedIn ? <Navigate to="/" /> : <Favorites />}
-        />
-        <Route path="/login" element={<Navigate to="/" />} />
-        <Route
-          path="/register"
-          element={isLoggedIn ? <Navigate to="/search" /> : <Register />}
-        />
-        <Route
-          path="/"
-          element={isLoggedIn ? <Navigate to="/search" /> : <Login />}
-        />
-      </Routes>
+      <div className={classes["routes-container"]}>
+        <Routes>
+          <Route
+            path="/search"
+            element={!isLoggedIn ? <Navigate to="/" /> : <Search />}
+          />
+          <Route
+            path="/favorites"
+            element={!isLoggedIn ? <Navigate to="/" /> : <Favorites />}
+          />
+          <Route path="/login" element={<Navigate to="/" />} />
+          <Route
+            path="/register"
+            element={isLoggedIn ? <Navigate to="/search" /> : <Register />}
+          />
+          <Route
+            path="/"
+            element={isLoggedIn ? <Navigate to="/search" /> : <Login />}
+          />
+        </Routes>
+      </div>
     </>
   );
 }

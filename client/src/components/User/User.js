@@ -1,6 +1,7 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Row, Card, CardGroup, Form, Button, Col } from "react-bootstrap";
+import Swal from "sweetalert2";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 import { fetchArticles } from "../../store/articlesSlice";
@@ -16,6 +17,7 @@ const User = () => {
   };
 
   const articlesList = useSelector((state) => state.articles.articles);
+  const articleAdded = useSelector((state) => state.user.articleAdded);
 
   const token = useSelector((state) => state.auth.jwtToken);
 
@@ -69,6 +71,28 @@ const User = () => {
     }
   }, [token]);
 
+  useEffect(() => {
+    if (articleAdded) {
+      Swal.fire({
+        position: "top",
+        icon: "success",
+        title: "Article added to favorites",
+        toast: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    } else if (articleAdded === false && articleAdded !== null) {
+      Swal.fire({
+        position: "top",
+        icon: "error",
+        title: "Article already added to favorites",
+        toast: true,
+        timer: 2000,
+        showConfirmButton: false,
+      });
+    }
+  }, [articleAdded]);
+
   return (
     <div>
       <Form onSubmit={onSearchSubmit}>
@@ -87,7 +111,7 @@ const User = () => {
         </Button>
       </Form>
       <CardGroup>
-        <Row xs={1} sm={2} md={3} lg={4}>
+        <Row xs={1} sm={2} md={3}>
           {mappedArticlesList}
         </Row>
       </CardGroup>

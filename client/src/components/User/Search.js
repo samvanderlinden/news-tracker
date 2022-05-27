@@ -105,7 +105,6 @@ const Search = () => {
             className={classes.searchInput}
           />
         </Form.Group>
-        {/* <div> */}
         <Button
           variant="primary"
           type="submit"
@@ -113,10 +112,9 @@ const Search = () => {
         >
           Search
         </Button>
-        {/* </div> */}
       </Form>
       <CardGroup>
-        <Row xs={1} sm={2} md={3}>
+        <Row xs={1} sm={2} md={3} className={classes.row}>
           {mappedArticlesList}
         </Row>
       </CardGroup>

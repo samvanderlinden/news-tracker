@@ -23,13 +23,11 @@ export const favoriteArticles = createSlice({
     },
     getFavorites: (state, action) => {
       state.favoriteArticles = action.payload;
-      state.articleAdded = null;
     },
     deleteFavorite: (state, action) => {
       state.favoriteArticles = state.favoriteArticles.filter((article) => {
         return article._id !== action.payload;
       });
-      state.articleAdded = null;
     },
   },
 });

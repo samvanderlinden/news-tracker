@@ -49,10 +49,10 @@ const Favorites = () => {
   return (
     <div>
       {listOfFavoriteArticles && listOfFavoriteArticles.length === 0 && (
-        <h3>No articles have been saved</h3>
+        <h3 style={{ color: "white" }}>No articles have been saved</h3>
       )}
       <CardGroup>
-        <Row xs={1} sm={2} md={3}>
+        <Row xs={1} sm={2} md={3} className={classes.row}>
           {listOfFavoriteArticles}
         </Row>
       </CardGroup>

@@ -19,6 +19,8 @@
 - [x] Register user
 - [x] Login user
 - [x] User adds article to their favorites
-- [ ] Improve client side error handling
+- [x] Improve client side error handling
 - [x] Give UI feedback when user saves article, and when user tries saving article that is already saved
-- [ ] Change background, edit card spacing and formatting
+- [x] Change background, edit card spacing and formatting
+- [ ] Add search functionality in Favorites component
+- [ ] Remove article description from card and replace with link that allows user to go to news source.

@@ -1,6 +1,6 @@
 import { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
-import { Row, Card, CardGroup, Form, Button } from "react-bootstrap";
+import { Row, Card, CardGroup, Form, Button, Spinner } from "react-bootstrap";
 import Swal from "sweetalert2";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
@@ -17,6 +17,7 @@ const Search = () => {
   };
 
   const articlesList = useSelector((state) => state.articles.articles);
+  const loadStatus = useSelector((state) => state.articles.status);
 
   const token = useSelector((state) => state.auth.jwtToken);
 
@@ -79,6 +80,24 @@ const Search = () => {
     }
   }, [token]);
 
+  // if (loadStatus === "loading") {
+  //   return (
+  //     <div className={classes["loading-spinner"]}>
+  //       <Spinner animation="border" role="status" variant="light">
+  //         <span className="visually-hidden">Loading...</span>
+  //       </Spinner>
+  //     </div>
+  //   );
+  // }
+
+  const showLoadingSpinner = loadStatus === "loading" && (
+    <div className={classes["loading-spinner"]}>
+      <Spinner animation="border" role="status" variant="light">
+        <span className="visually-hidden">Loading...</span>
+      </Spinner>
+    </div>
+  );
+
   return (
     <div>
       <Form onSubmit={onSearchSubmit}>
@@ -104,9 +123,15 @@ const Search = () => {
           {mappedArticlesList}
         </Row>
       </CardGroup>
-      {formIsSubmitted && articlesList && articlesList.length === 0 && (
-        <p>No articles found with your search criteria</p>
-      )}
+
+      {formIsSubmitted &&
+        loadStatus === "idle" &&
+        articlesList.length === 0 && (
+          <p className={classes["no-results"]}>
+            No articles found with your search criteria
+          </p>
+        )}
+      {showLoadingSpinner}
     </div>
   );
 };

@@ -17,7 +17,6 @@ const Search = () => {
   };
 
   const articlesList = useSelector((state) => state.articles.articles);
-  const articleAdded = useSelector((state) => state.user.articleAdded);
 
   const token = useSelector((state) => state.auth.jwtToken);
 
@@ -28,14 +27,14 @@ const Search = () => {
 
     setFormIsSubmitted(true);
 
-    // if (
-    //   e.target.value === "" ||
-    //   e.target.value === " " ||
-    //   e.target.value === null ||
-    //   e.target.value === undefined
-    // ) {
-    //   return;
-    // }
+    if (
+      searchTerm === "" ||
+      searchTerm === " " ||
+      searchTerm === null ||
+      searchTerm === undefined
+    ) {
+      return; //Do not submit form if empty
+    }
 
     dispatch(fetchArticles(searchTerm));
 
@@ -44,6 +43,15 @@ const Search = () => {
 
   const onAddToFavorites = (article) => {
     dispatch(addArticle(article));
+
+    Swal.fire({
+      position: "bottom",
+      icon: "success",
+      title: "Article added to favorites",
+      toast: true,
+      timer: 2000,
+      showConfirmButton: false,
+    });
   };
 
   const mappedArticlesList = articlesList.map((article) => {
@@ -70,28 +78,6 @@ const Search = () => {
       localStorage.setItem("jwtToken", token);
     }
   }, [token]);
-
-  useEffect(() => {
-    if (articleAdded) {
-      Swal.fire({
-        position: "top",
-        icon: "success",
-        title: "Article added to favorites",
-        toast: true,
-        timer: 2000,
-        showConfirmButton: false,
-      });
-    } else if (articleAdded === false && articleAdded !== null) {
-      Swal.fire({
-        position: "top",
-        icon: "error",
-        title: "Article already added to favorites",
-        toast: true,
-        timer: 2000,
-        showConfirmButton: false,
-      });
-    }
-  }, [articleAdded]);
 
   return (
     <div>

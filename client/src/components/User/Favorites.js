@@ -8,7 +8,6 @@ import classes from "./UserCard.module.css";
 
 const Favorites = () => {
   const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
-  console.log("favorite articles", favoriteArticles);
 
   const dispatch = useDispatch();
 

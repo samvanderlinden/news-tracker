@@ -72,7 +72,7 @@ const Login = () => {
       <AuthCard header="Login" mainScreen="register" submit={loginHandler}>
         <Form.Group className="mb-3" controlId="emailLogin">
           <Form.Control
-            type="text"
+            type="email"
             name="email"
             value={email}
             onChange={onEmailChange}

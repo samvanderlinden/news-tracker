@@ -14,7 +14,7 @@ export const favoriteArticles = createSlice({
     addToFavorites: (state, action) => {
       if (!action.payload.errorMessage) {
         state.favoriteArticles.push(action.payload.article);
-        state.errorMessage = null;
+        state.errorMessage = false;
         state.articleAdded = true;
       } else {
         state.errorMessage = action.payload.errorMessage;
@@ -28,6 +28,9 @@ export const favoriteArticles = createSlice({
       state.favoriteArticles = state.favoriteArticles.filter((article) => {
         return article._id !== action.payload;
       });
+    },
+    errorMessageReset: (state) => {
+      state.errorMessage = null;
     },
   },
 });
@@ -54,6 +57,10 @@ export const addArticle = (article) => async (dispatch) => {
     dispatch(
       addToFavorites({ article: articleInfoToSave, errorMessage: null })
     );
+
+    setTimeout(() => {
+      dispatch(errorMessageReset());
+    }, 1000);
   } catch (err) {
     dispatch(
       addToFavorites({
@@ -61,6 +68,10 @@ export const addArticle = (article) => async (dispatch) => {
         errorMessage: err.response.data.error,
       })
     );
+
+    setTimeout(() => {
+      dispatch(errorMessageReset());
+    }, 1000);
   }
 };
 
@@ -113,7 +124,11 @@ export const deleteArticle = (id) => async (dispatch) => {
   }
 };
 
-export const { addToFavorites, getFavorites, deleteFavorite } =
-  favoriteArticles.actions;
+export const {
+  addToFavorites,
+  getFavorites,
+  deleteFavorite,
+  errorMessageReset,
+} = favoriteArticles.actions;
 
 export default favoriteArticles.reducer;

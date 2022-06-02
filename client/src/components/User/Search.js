@@ -18,6 +18,8 @@ const Search = () => {
 
   const articlesList = useSelector((state) => state.articles.articles);
   const loadStatus = useSelector((state) => state.articles.status);
+  const error = useSelector((state) => state.user.errorMessage);
+  console.log("🚀 ~ file: Search.js ~ line 22 ~ Search ~ error", error);
 
   const token = useSelector((state) => state.auth.jwtToken);
 
@@ -46,6 +48,28 @@ const Search = () => {
   const onAddToFavorites = (article) => {
     dispatch(addArticle(article));
 
+    // if (!error) {
+    //   Swal.fire({
+    //     position: "bottom",
+    //     icon: "success",
+    //     title: "Article added to favorites",
+    //     toast: true,
+    //     timer: 2000,
+    //     showConfirmButton: false,
+    //   });
+    // } else {
+    //   Swal.fire({
+    //     position: "bottom",
+    //     icon: "warning",
+    //     title: "Article already added to favorites",
+    //     toast: true,
+    //     timer: 2000,
+    //     showConfirmButton: false,
+    //   });
+    // }
+  };
+
+  if (error === false && error !== null) {
     Swal.fire({
       position: "bottom",
       icon: "success",
@@ -54,7 +78,16 @@ const Search = () => {
       timer: 2000,
       showConfirmButton: false,
     });
-  };
+  } else if (error) {
+    Swal.fire({
+      position: "bottom",
+      icon: "warning",
+      title: "Article already added to favorites",
+      toast: true,
+      timer: 2000,
+      showConfirmButton: false,
+    });
+  }
 
   const mappedArticlesList = articlesList.map((article) => {
     const image = article.urlToImage ? article.urlToImage : noImage;

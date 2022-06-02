@@ -3,14 +3,20 @@ import axios from "axios";
 
 const initialState = {
   articles: [],
+  status: "idle",
 };
 
 export const articlesSlice = createSlice({
   name: "articles",
   initialState,
   reducers: {
+    articlesLoading: (state) => {
+      state.status = "loading";
+      state.articles = [];
+    },
     searchArticles: (state, action) => {
       state.articles = action.payload;
+      state.status = "idle";
     },
     resetArticles: (state) => {
       state.articles = [];
@@ -19,13 +25,16 @@ export const articlesSlice = createSlice({
 });
 
 // Action creators are generated for each case reducer function
-export const { searchArticles, resetArticles } = articlesSlice.actions;
+export const { searchArticles, resetArticles, articlesLoading } =
+  articlesSlice.actions;
 
 // Define a thunk that dispatches those action creators
 export const fetchArticles = (searchTerm) => async (dispatch) => {
   const authToken = localStorage.getItem("jwtToken");
 
   try {
+    dispatch(articlesLoading());
+
     const response = await axios(
       `http://localhost:5000/api/articles/top-headlines/${searchTerm}`,
       {

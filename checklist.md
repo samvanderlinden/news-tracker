@@ -24,3 +24,4 @@
 - [x] Change background, edit card spacing and formatting
 - [ ] Add search functionality in Favorites component
 - [ ] Remove article description from card and replace with link that allows user to go to news source.
+- [x] Add loading spinner when user searches for articles

@@ -16,6 +16,15 @@
   height: auto
 }
 
+.loading-spinner, .no-results {
+  display: flex;
+  justify-content: center;
+}
+
+.no-results {
+  color: white
+}
+
 .searchInput {
   width: 50%;
   min-width: 300px;

@@ -26,16 +26,17 @@ const Search = () => {
 
     setSearchTerm(e.target.value);
 
-    setFormIsSubmitted(true);
-
     if (
       searchTerm === "" ||
       searchTerm === " " ||
       searchTerm === null ||
       searchTerm === undefined
     ) {
+      setFormIsSubmitted(false);
       return; //Do not submit form if empty
     }
+
+    setFormIsSubmitted(true);
 
     dispatch(fetchArticles(searchTerm));
 
@@ -79,16 +80,6 @@ const Search = () => {
       localStorage.setItem("jwtToken", token);
     }
   }, [token]);
-
-  // if (loadStatus === "loading") {
-  //   return (
-  //     <div className={classes["loading-spinner"]}>
-  //       <Spinner animation="border" role="status" variant="light">
-  //         <span className="visually-hidden">Loading...</span>
-  //       </Spinner>
-  //     </div>
-  //   );
-  // }
 
   const showLoadingSpinner = loadStatus === "loading" && (
     <div className={classes["loading-spinner"]}>

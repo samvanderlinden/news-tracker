@@ -57,9 +57,7 @@ export const fetchArticles = (searchTerm) => async (dispatch) => {
       );
     }
 
-    setTimeout(() => {
-      dispatch(searchArticles(uniqueArticles));
-    }, 3000);
+    dispatch(searchArticles(uniqueArticles));
   } catch (error) {
     console.log(error);
   }

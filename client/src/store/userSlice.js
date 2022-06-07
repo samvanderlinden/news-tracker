@@ -29,6 +29,12 @@ export const favoriteArticles = createSlice({
         return article._id !== action.payload;
       });
     },
+    filterFavorites: (state, action) => {
+      let regexCriteria = new RegExp(`${action.payload}`, "i");
+      state.favoriteArticles = state.favoriteArticles.filter((article) => {
+        return regexCriteria.test(article.title);
+      });
+    },
   },
 });
 
@@ -113,7 +119,25 @@ export const deleteArticle = (id) => async (dispatch) => {
   }
 };
 
-export const { addToFavorites, getFavorites, deleteFavorite } =
+export const filterFavoriteArticles = (search) => async (dispatch) => {
+  const authToken = localStorage.getItem("jwtToken");
+
+  try {
+    const response = await axios(`http://localhost:5000/api/articles`, {
+      headers: {
+        "auth-token": authToken,
+      },
+    });
+
+    dispatch(getFavorites(response.data));
+
+    dispatch(filterFavorites(search));
+  } catch (error) {
+    console.log(error);
+  }
+};
+
+export const { addToFavorites, getFavorites, deleteFavorite, filterFavorites } =
   favoriteArticles.actions;
 
 export default favoriteArticles.reducer;

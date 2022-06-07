@@ -1,15 +1,26 @@
-import { useEffect } from "react";
+import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CardGroup, Row, Card, Button } from "react-bootstrap";
+import { CardGroup, Row, Card, Button, Form } from "react-bootstrap";
 import { getFavoriteArticles } from "../../store/userSlice";
-import { deleteArticle } from "../../store/userSlice";
+import { deleteArticle, filterFavoriteArticles } from "../../store/userSlice";
 import noImage from "../../assets/image-not-found-1-scaled.png";
 import classes from "./UserCard.module.css";
 
 const Favorites = () => {
+  const [searchTerm, setSearchTerm] = useState("");
   const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
+  console.log(
+    "🚀 ~ file: Favorites.js ~ line 12 ~ Favorites ~ favoriteArticles",
+    favoriteArticles
+  );
 
   const dispatch = useDispatch();
+
+  const onSearchChange = (e) => {
+    setSearchTerm(e.target.value);
+
+    dispatch(filterFavoriteArticles(e.target.value));
+  };
 
   const onDeleteArticle = (article) => {
     dispatch(deleteArticle(article._id));
@@ -48,6 +59,15 @@ const Favorites = () => {
 
   return (
     <div>
+      <Form.Group controlId="articleSearch">
+        <Form.Control
+          type="text"
+          value={searchTerm}
+          onChange={onSearchChange}
+          placeholder="Search for favorite articles (by title)"
+          className={classes.searchInput}
+        />
+      </Form.Group>
       {listOfFavoriteArticles && listOfFavoriteArticles.length === 0 && (
         <h3 style={{ color: "white" }}>No articles have been saved</h3>
       )}

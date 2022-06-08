@@ -64,6 +64,10 @@ export const addArticle = (article) => async (dispatch) => {
       addToFavorites({ article: articleInfoToSave, errorMessage: null })
     );
 
+    //The Sweet Alert toast in Search.js renders based on the errorMessage state.
+    //However, when the user attempts to add an article the Sweet Alert toast is rendered based on the current errorMessage state
+    //instead of the errorMessage triggered from adding an article to Favorites.
+    //Therefore the errorMessage needs to reset to null after each attempt to add an article
     setTimeout(() => {
       dispatch(resetArticleAdded());
     }, 1000);

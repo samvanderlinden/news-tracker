@@ -46,15 +46,6 @@ const Search = () => {
 
   const onAddToFavorites = (article) => {
     dispatch(addArticle(article));
-
-    // Swal.fire({
-    //   position: "bottom",
-    //   icon: "success",
-    //   title: "Article added to favorites",
-    //   toast: true,
-    //   timer: 2000,
-    //   showConfirmButton: false,
-    // });
   };
 
   if (error === false && error !== null) {

@@ -9,10 +9,6 @@ import classes from "./UserCard.module.css";
 const Favorites = () => {
   const [searchTerm, setSearchTerm] = useState("");
   const favoriteArticles = useSelector((state) => state.user.favoriteArticles);
-  console.log(
-    "🚀 ~ file: Favorites.js ~ line 12 ~ Favorites ~ favoriteArticles",
-    favoriteArticles
-  );
 
   const dispatch = useDispatch();
 

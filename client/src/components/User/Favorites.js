@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { useSelector, useDispatch } from "react-redux";
-import { CardGroup, Row, Card, Button, Form } from "react-bootstrap";
+import { CardGroup, Row, Card, Button, Form, Nav } from "react-bootstrap";
 import { getFavoriteArticles } from "../../store/userSlice";
 import { deleteArticle, filterFavoriteArticles } from "../../store/userSlice";
 import noImage from "../../assets/image-not-found-1-scaled.png";
@@ -43,13 +43,16 @@ const Favorites = () => {
             <Card.Text className={classes["card-description"]}>
               {article.description}
             </Card.Text>
-            <div>
+            <div className={classes["buttons-container"]}>
               <Button
                 variant="outline-danger"
                 onClick={() => onDeleteArticle(article)}
               >
                 Delete from Favorites
-              </Button>
+              </Button>{" "}
+              <Nav.Link href={`${article.url}`} target="_blank">
+                Go to Article
+              </Nav.Link>
             </div>
           </Card.Body>
         </Card>

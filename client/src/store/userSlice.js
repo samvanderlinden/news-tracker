@@ -51,6 +51,7 @@ export const addArticle = (article) => async (dispatch) => {
     description: article.description,
     content: article.content,
     urlToImage: article.urlToImage,
+    url: article.url,
   };
 
   try {

@@ -8,7 +8,8 @@ const { JsonWebTokenError } = require("jsonwebtoken");
 
 //ADD ARTICLE TO COLLECTION IF USER IS LOGGED IN
 route.post("/", verify, async (req, res) => {
-  const { source, author, description, content, title, urlToImage } = req.body;
+  const { source, author, description, content, title, urlToImage, url } =
+    req.body;
 
   try {
     const article = new Article({
@@ -18,6 +19,7 @@ route.post("/", verify, async (req, res) => {
       description,
       title,
       urlToImage,
+      url,
       savedBy: req.user._id,
     });
 
@@ -73,7 +75,7 @@ route.get("/top-headlines/:searchTerm", verify, async (req, res) => {
   }
 });
 
-//DELETE POST
+//DELETE ARTICLE
 route.delete("/:articleId", verify, async (req, res) => {
   try {
     const deletedArticle = await Article.findOneAndDelete({

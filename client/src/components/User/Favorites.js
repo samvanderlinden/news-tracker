@@ -40,13 +40,17 @@ const Favorites = () => {
           />
           <Card.Body>
             <Card.Title>{article.title}</Card.Title>
-            <Card.Text>{article.description}</Card.Text>
-            <Button
-              variant="outline-danger"
-              onClick={() => onDeleteArticle(article)}
-            >
-              Delete from Favorites
-            </Button>
+            <Card.Text className={classes["card-description"]}>
+              {article.description}
+            </Card.Text>
+            <div>
+              <Button
+                variant="outline-danger"
+                onClick={() => onDeleteArticle(article)}
+              >
+                Delete from Favorites
+              </Button>
+            </div>
           </Card.Body>
         </Card>
       );
